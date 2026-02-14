@@ -2,27 +2,26 @@
   <img src="./img.png" alt="Project Banner" width="100%">
 </p>
 
-# [Project Name] 🎯
+# CampusVoice🎯
 
 ## Basic Details
 
-### Team Name: [Name]
+### Team Name: ASNNAH
 
 ### Team Members
-- Member 1: [Name] - [College]
-- Member 2: [Name] - [College]
+- Member 1: Asna A - jyothi engineering college
+- Member 2: Hannah Margret M S  - jyothi engineering college
 
 ### Hosted Project Link
 [mention your project hosted link here]
 
 ### Project Description
-[2-3 lines about what your project does]
-
+CampusVoice is a centralized web platform designed for students to report and track campus-related issues (maintenance, safety, or academic) in real-time. It bridges the communication gap between the student body and campus administration.
 ### The Problem statement
-[What problem are you solving?]
+On many campuses, reporting issues like broken facilities or safety concerns is a slow, opaque process involving physical forms or ignored emails. Students often don't know if their complaint has been seen or if action is being taken.
 
 ### The Solution
-[How are you solving it?]
+We built a responsive web portal that allows students to submit categorized complaints with varying severity levels. By using Supabase as a backend, we provide an instant data flow where students can track the status of their reports from "Reported" to "Resolved" through a personal dashboard.
 
 ---
 
@@ -31,51 +30,88 @@
 ### Technologies/Components Used
 
 **For Software:**
-- Languages used: [e.g., JavaScript, Python, Java]
-- Frameworks used: [e.g., React, Django, Spring Boot]
-- Libraries used: [e.g., axios, pandas, JUnit]
-- Tools used: [e.g., VS Code, Git, Docker]
+Languages: HTML5, CSS3, JavaScript (ES6+)
 
-**For Hardware:**
-- Main components: [List main components]
-- Specifications: [Technical specifications]
-- Tools required: [List tools needed]
+Backend-as-a-Service: Supabase (PostgreSQL Database)
 
+Icons/Styling: FontAwesome (for severity icons), Google Fonts
+
+Tools: VS Code, Git
 ---
 
 ## Features
 
-List the key features of your project:
-- Feature 1: [Description]
-- Feature 2: [Description]
-- Feature 3: [Description]
-- Feature 4: [Description]
+Anonymous Reporting: Students can toggle "Post as Anonymous" to report sensitive issues without revealing their identity.
 
+Severity Classification: Users can tag issues as Low, Medium, or High to help administration prioritize tasks.
+
+Live Status Tracking: A dedicated "My Complaints" section shows a progress bar for every submitted issue.
+
+Direct Database Integration: Real-time data insertion into Supabase without needing a middle-tier server.
 ---
 
 ## Implementation
+Supabase Table Setup (SQL)
+To replicate the backend for this project, run the following in your Supabase SQL Editor:
+
+SQL
+CREATE TABLE complaints (
+  id bigint generated always as identity primary key,
+  created_at timestamp with time zone default now(),
+  title text,
+  category text,
+  severity text,
+  description text,
+  location text,
+  is_anonymous boolean default false
+);
+
+-- RLS Disabled for testing phase
+ALTER TABLE complaints DISABLE ROW LEVEL SECURITY;
+Frontend Integration (JavaScript)
+Add the following to your script to connect the "Submit" button to your database:
+
+JavaScript
+const SUPABASE_URL = 'https://pbblscnyzfqshrqdzxkq.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_jGt1c4FKIZWPal_jp0e4eQ_07L6YizJ';
+const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+const form = document.getElementById('complaint-form');
+
+form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    const { error } = await supabase
+        .from('complaints')
+        .insert([{
+            title: document.getElementById('title').value,
+            category: document.getElementById('category').value,
+            severity: document.getElementById('severity').value,
+            description: document.getElementById('description').value,
+            location: document.getElementById('location').value,
+            is_anonymous: document.getElementById('anonymous-toggle').checked
+        }]);
+
+    if (error) alert('Error: ' + error.message);
+    else alert('Complaint Submitted!');
+});
 
 ### For Software:
 
 #### Installation
-```bash
-[Installation commands - e.g., npm install, pip install -r requirements.txt]
-```
+# Clone the repository
+git clone https://github.com/your-repo/campusvoice.git
+
+# Navigate to the project directory
+cd campusvoice
+
+# Open index.html in your preferred browser
+# Or use a live server (if using VS Code)
+code .
 
 #### Run
-```bash
-[Run commands - e.g., npm start, python app.py]
-```
-
-### For Hardware:
-
-#### Components Required
-[List all components needed with specifications]
-
-#### Circuit Setup
-[Explain how to set up the circuit]
-
----
+# Since this is a frontend-driven application:
+# Simply open index.html in a web browser.
 
 ## Project Documentation
 
@@ -83,53 +119,37 @@ List the key features of your project:
 
 #### Screenshots (Add at least 3)
 
-![Screenshot1](Add screenshot 1 here with proper name)
-*Add caption explaining what this shows*
+<img width="840" height="928" alt="image" src="https://github.com/user-attachments/assets/53ab2d7c-84d5-46db-83dc-3a683e52378d" />
+The Secure Login Gateway: Students can log in with their ID, create a new account, or choose the "Report Anonymously" path
 
-![Screenshot2](Add screenshot 2 here with proper name)
-*Add caption explaining what this shows*
 
-![Screenshot3](Add screenshot 3 here with proper name)
-*Add caption explaining what this shows*
+<img width="1847" height="961" alt="image" src="https://github.com/user-attachments/assets/2946d68c-89e7-4afa-92a5-95aa6cc31269" />
+Information Gathering: A clean, validated form to collect basic issue details and user contact info.
+
+<img width="577" height="860" alt="image" src="https://github.com/user-attachments/assets/261650f4-c405-41de-820f-a9b5a269ba85" />
+Category and Priority Selector: A grid-based UI allowing users to visually select the type of issue (Harassment, Water, Hostel, etc.) and its urgency.
 
 #### Diagrams
 
 **System Architecture:**
 
-![Architecture Diagram](docs/architecture.png)
-*Explain your system architecture - components, data flow, tech stack interaction*
+<img width="3000" height="2500" alt="image" src="https://github.com/user-attachments/assets/1850a608-70d7-4f1d-a3e3-58e78ea4931d" />
+Frontend: Built using HTML5, CSS3 (Custom Variables/Animations), and Vanilla JavaScript.
+
+State Management: Local JS objects manage multi-step form data before submission.
+
+Security: Client-side validation for passwords (min-length) and required fields.
 
 **Application Workflow:**
+<img width="3999" height="2999" alt="image" src="https://github.com/user-attachments/assets/b0a791bb-3e17-4ac0-8059-71020065562f" />
 
-![Workflow](docs/workflow.png)
-*Add caption explaining your workflow*
+Step 1: Authentication (Login/Register) or Anonymous bypass.
 
----
+Step 2: Personal/Issue detail collection.
 
-### For Hardware:
+Step 3: Categorization and Priority assignment.
 
-#### Schematic & Circuit
-
-![Circuit](Add your circuit diagram here)
-*Add caption explaining connections*
-
-![Schematic](Add your schematic diagram here)
-*Add caption explaining the schematic*
-
-#### Build Photos
-
-![Team](Add photo of your team here)
-
-![Components](Add photo of your components here)
-*List out all components shown*
-
-![Build](Add photos of build process here)
-*Explain the build steps*
-
-![Final](Add photo of final product here)
-*Explain the final build*
-
----
+Step 4: Reference number generation and success tracking.
 
 ## Additional Documentation
 
@@ -137,167 +157,38 @@ List the key features of your project:
 
 #### API Documentation
 
-**Base URL:** `https://api.yourproject.com`
+For Web Projects with Backend:
+API Documentation (Proposed)
+Base URL: https://api.campusvoice.edu
 
 ##### Endpoints
 
 **GET /api/endpoint**
-- **Description:** [What it does]
-- **Parameters:**
-  - `param1` (string): [Description]
-  - `param2` (integer): [Description]
-- **Response:**
-```json
+POST /api/complaints
+
+Description: Submits a new student complaint.
+
+Parameters:
+
+studentId (string): Unique identifier.
+
+category (string): harassment, water, hostel, etc.
+
+priority (string): low, medium, high.
+
+Response:
+
+JSON
 {
   "status": "success",
-  "data": {}
+  "data": {
+    "refNumber": "CV-2026-4829",
+    "timestamp": "2026-02-14T09:30:00Z"
+  }
 }
-```
 
-**POST /api/endpoint**
-- **Description:** [What it does]
-- **Request Body:**
-```json
-{
-  "field1": "value1",
-  "field2": "value2"
-}
-```
-- **Response:**
-```json
-{
-  "status": "success",
-  "message": "Operation completed"
-}
-```
 
-[Add more endpoints as needed...]
 
----
-
-### For Mobile Apps:
-
-#### App Flow Diagram
-
-![App Flow](docs/app-flow.png)
-*Explain the user flow through your application*
-
-#### Installation Guide
-
-**For Android (APK):**
-1. Download the APK from [Release Link]
-2. Enable "Install from Unknown Sources" in your device settings:
-   - Go to Settings > Security
-   - Enable "Unknown Sources"
-3. Open the downloaded APK file
-4. Follow the installation prompts
-5. Open the app and enjoy!
-
-**For iOS (IPA) - TestFlight:**
-1. Download TestFlight from the App Store
-2. Open this TestFlight link: [Your TestFlight Link]
-3. Click "Install" or "Accept"
-4. Wait for the app to install
-5. Open the app from your home screen
-
-**Building from Source:**
-```bash
-# For Android
-flutter build apk
-# or
-./gradlew assembleDebug
-
-# For iOS
-flutter build ios
-# or
-xcodebuild -workspace App.xcworkspace -scheme App -configuration Debug
-```
-
----
-
-### For Hardware Projects:
-
-#### Bill of Materials (BOM)
-
-| Component | Quantity | Specifications | Price | Link/Source |
-|-----------|----------|----------------|-------|-------------|
-| Arduino Uno | 1 | ATmega328P, 16MHz | ₹450 | [Link] |
-| LED | 5 | Red, 5mm, 20mA | ₹5 each | [Link] |
-| Resistor | 5 | 220Ω, 1/4W | ₹1 each | [Link] |
-| Breadboard | 1 | 830 points | ₹100 | [Link] |
-| Jumper Wires | 20 | Male-to-Male | ₹50 | [Link] |
-| [Add more...] | | | | |
-
-**Total Estimated Cost:** ₹[Amount]
-
-#### Assembly Instructions
-
-**Step 1: Prepare Components**
-1. Gather all components listed in the BOM
-2. Check component specifications
-3. Prepare your workspace
-![Step 1](images/assembly-step1.jpg)
-*Caption: All components laid out*
-
-**Step 2: Build the Power Supply**
-1. Connect the power rails on the breadboard
-2. Connect Arduino 5V to breadboard positive rail
-3. Connect Arduino GND to breadboard negative rail
-![Step 2](images/assembly-step2.jpg)
-*Caption: Power connections completed*
-
-**Step 3: Add Components**
-1. Place LEDs on breadboard
-2. Connect resistors in series with LEDs
-3. Connect LED cathodes to GND
-4. Connect LED anodes to Arduino digital pins (2-6)
-![Step 3](images/assembly-step3.jpg)
-*Caption: LED circuit assembled*
-
-**Step 4: [Continue for all steps...]**
-
-**Final Assembly:**
-![Final Build](images/final-build.jpg)
-*Caption: Completed project ready for testing*
-
----
-
-### For Scripts/CLI Tools:
-
-#### Command Reference
-
-**Basic Usage:**
-```bash
-python script.py [options] [arguments]
-```
-
-**Available Commands:**
-- `command1 [args]` - Description of what command1 does
-- `command2 [args]` - Description of what command2 does
-- `command3 [args]` - Description of what command3 does
-
-**Options:**
-- `-h, --help` - Show help message and exit
-- `-v, --verbose` - Enable verbose output
-- `-o, --output FILE` - Specify output file path
-- `-c, --config FILE` - Specify configuration file
-- `--version` - Show version information
-
-**Examples:**
-
-```bash
-# Example 1: Basic usage
-python script.py input.txt
-
-# Example 2: With verbose output
-python script.py -v input.txt
-
-# Example 3: Specify output file
-python script.py -o output.txt input.txt
-
-# Example 4: Using configuration
-python script.py -c config.json --verbose input.txt
-```
 
 #### Demo Output
 
@@ -324,39 +215,7 @@ Status: Success
 Output saved to: output.txt
 ```
 
-**Example 2: Advanced Usage**
 
-**Input:**
-```json
-{
-  "name": "test",
-  "value": 123
-}
-```
-
-**Command:**
-```bash
-python script.py -v --format json data.json
-```
-
-**Output:**
-```
-[VERBOSE] Loading configuration...
-[VERBOSE] Parsing JSON input...
-[VERBOSE] Processing data...
-{
-  "status": "success",
-  "processed": true,
-  "result": {
-    "name": "test",
-    "value": 123,
-    "timestamp": "2024-02-07T10:30:00"
-  }
-}
-[VERBOSE] Operation completed in 0.23s
-```
-
----
 
 ## Project Demo
 
@@ -372,43 +231,44 @@ python script.py -v --format json data.json
 
 ## AI Tools Used (Optional - For Transparency Bonus)
 
-If you used AI tools during development, document them here for transparency:
+Tools Used: Claude Haiku & Gemini
 
-**Tool Used:** [e.g., GitHub Copilot, v0.dev, Cursor, ChatGPT, Claude]
+Purpose:
 
-**Purpose:** [What you used it for]
-- Example: "Generated boilerplate React components"
-- Example: "Debugging assistance for async functions"
-- Example: "Code review and optimization suggestions"
+Claude Haiku: Primarily used for generating efficient, low-latency boilerplate code and debugging complex JavaScript functions. Its speed allowed for rapid iteration on the form logic.
 
-**Key Prompts Used:**
-- "Create a REST API endpoint for user authentication"
-- "Debug this async function that's causing race conditions"
-- "Optimize this database query for better performance"
+Gemini: Used for architectural planning, refining the UI/UX copy, and generating the system architecture descriptions. Gemini also helped in cross-referencing documentation for the external libraries used.
 
-**Percentage of AI-generated code:** [Approximately X%]
+Key Prompts Used:
+
+"Optimize this JavaScript for minimum latency in a multi-step form using Claude Haiku."
+
+"Help me design a user-friendly color palette for a college complaint portal that feels both professional and approachable."
+
+"Write a detailed explanation for a system architecture involving a frontend-only state management system."
+
+Percentage of AI-generated code: ~45%
 
 **Human Contributions:**
-- Architecture design and planning
-- Custom business logic implementation
-- Integration and testing
-- UI/UX design decisions
+Logical Flow: Defining the specific steps for the complaint submission process.
 
-*Note: Proper documentation of AI usage demonstrates transparency and earns bonus points in evaluation!*
+Category Design: Tailoring the complaint types (Water, Hostel, Harassment) to the actual needs of our campus.
+
+Final Review: Ensuring all AI-generated code adhered to standard security practices and remained bug-free during manual testing.
 
 ---
 
 ## Team Contributions
 
-- [Name 1]: [Specific contributions - e.g., Frontend development, API integration, etc.]
-- [Name 2]: [Specific contributions - e.g., Backend development, Database design, etc.]
-- [Name 3]: [Specific contributions - e.g., UI/UX design, Testing, Documentation, etc.]
+Member 1: Lead Frontend Developer — Responsible for HTML/CSS architecture, custom animations, and UI components.
+
+Member 2: Systems & Logic — Responsible for JavaScript functionality, form state management, and project documentation.
 
 ---
 
 ## License
 
-This project is licensed under the [LICENSE_NAME] License - see the [LICENSE](LICENSE) file for details.
+Licensed under the MIT License. file for details.
 
 **Common License Options:**
 - MIT License (Permissive, widely used)
