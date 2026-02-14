@@ -2,27 +2,29 @@
   <img src="./img.png" alt="Project Banner" width="100%">
 </p>
 
-# [Project Name] 🎯
+# CampusvoiceLite 🎯
 
 ## Basic Details
 
-### Team Name: [Name]
+### Team Name: Asnnah
 
 ### Team Members
-- Member 1: [Name] - [College]
-- Member 2: [Name] - [College]
+- Member 1: Asna A - Jyothi Engineering College
+- Member 2: Hannah Margret M S - Jyothi Engineering College
 
 ### Hosted Project Link
 [mention your project hosted link here]
 
 ### Project Description
-[2-3 lines about what your project does]
+
 
 ### The Problem statement
-[What problem are you solving?]
+The Problem statement
+On many campuses, reporting issues like harassment, hostel maintenance, or academic grievances involves tedious paperwork, long wait times, and a lack of transparency. Students often feel their "voice" is lost in administrative loops, and there is no clear way to track if a complaint is actually being resolved.
 
 ### The Solution
-[How are you solving it?]
+The Solution
+CampusVoice is a digital Single Page Application (SPA) that centralizes student grievances. It provides a secure, tiered reporting system where students can file complaints under specific categories (Hostel, Academic, etc.) with priority levels. The system provides a unique Reference ID for every report, allowing students to track the status from "Reported" to "Resolved" in real-time.
 
 ---
 
@@ -30,26 +32,25 @@
 
 ### Technologies/Components Used
 
-**For Software:**
-- Languages used: [e.g., JavaScript, Python, Java]
-- Frameworks used: [e.g., React, Django, Spring Boot]
-- Libraries used: [e.g., axios, pandas, JUnit]
-- Tools used: [e.g., VS Code, Git, Docker]
+For Software:
 
-**For Hardware:**
-- Main components: [List main components]
-- Specifications: [Technical specifications]
-- Tools required: [List tools needed]
+Languages used: HTML5, CSS3, JavaScript (ES6+)
+
+Frameworks used: Single Page Application (SPA) Architecture (Vanilla JS)
+
+Libraries used: Font-Awesome (Icons), Supabase (Backend/Auth)
+
+Tools used: VS Code, Git, Supabase Dashboardal specifications]
 
 ---
 
 ## Features
 
 List the key features of your project:
-- Feature 1: [Description]
-- Feature 2: [Description]
-- Feature 3: [Description]
-- Feature 4: [Description]
+- Feature 1: Secure Registration/Login: A dedicated gateway for students to create accounts using college credentials.
+- Feature 2: Categorized Reporting: Intuitive icon-based selection for issue types (Harassment, Water, Hostel, Academic).
+- Feature 3: Priority Management: Ability to flag issues as Low, Medium, or High to assist administration in triaging.
+- Feature 4: Real-time Progress Tracker: A visual progress bar that updates as the administration reviews and resolves the ticket.
 
 ---
 
@@ -59,12 +60,17 @@ List the key features of your project:
 
 #### Installation
 ```bash
-[Installation commands - e.g., npm install, pip install -r requirements.txt]
+# Clone the repository
+git clone https://github.com/yourusername/campusvoice.git
+
+# No heavy dependencies required for the frontend
+# Just ensure you have your Supabase keys in supabaseClient.js
 ```
 
 #### Run
 ```bash
-[Run commands - e.g., npm start, python app.py]
+# Open index.html in any modern browser
+# Or use VS Code Live Server
 ```
 
 ### For Hardware:
@@ -83,14 +89,14 @@ List the key features of your project:
 
 #### Screenshots (Add at least 3)
 
-![Screenshot1](Add screenshot 1 here with proper name)
-*Add caption explaining what this shows*
+<img width="585" height="883" alt="image" src="https://github.com/user-attachments/assets/394a2f8e-ea5d-4d03-ad47-9fdbcb2e37cf" />
+Shows the initial registration form with validation for Student ID and Password.
 
-![Screenshot2](Add screenshot 2 here with proper name)
-*Add caption explaining what this shows*
+<img width="728" height="652" alt="image" src="https://github.com/user-attachments/assets/0c05f866-3b76-4b99-b608-3b75339075c4" />
+The landing page after login where users can start a new complaint or view existing ones.
 
-![Screenshot3](Add screenshot 3 here with proper name)
-*Add caption explaining what this shows*
+<img width="544" height="791" alt="image" src="https://github.com/user-attachments/assets/58299b00-92f0-41bc-96ab-813fa5fbc4be" />
+The core reporting interface showing the category selection and priority toggle.
 
 #### Diagrams
 
@@ -101,33 +107,9 @@ List the key features of your project:
 
 **Application Workflow:**
 
-![Workflow](docs/workflow.png)
-*Add caption explaining your workflow*
-
+User registers → Logs in → Selects Category/Priority → Writes Description → Receives Reference ID.
 ---
 
-### For Hardware:
-
-#### Schematic & Circuit
-
-![Circuit](Add your circuit diagram here)
-*Add caption explaining connections*
-
-![Schematic](Add your schematic diagram here)
-*Add caption explaining the schematic*
-
-#### Build Photos
-
-![Team](Add photo of your team here)
-
-![Components](Add photo of your components here)
-*List out all components shown*
-
-![Build](Add photos of build process here)
-*Explain the build steps*
-
-![Final](Add photo of final product here)
-*Explain the final build*
 
 ---
 
@@ -137,7 +119,8 @@ List the key features of your project:
 
 #### API Documentation
 
-**Base URL:** `https://api.yourproject.com`
+**Base URL:**(https://pbblscnyzfqshrqdzxkq.supabase.co)`
+  API KEY :  'sb_publishable_jGt1c4FKIZWPal_jp0e4eQ_07L6YizJ' 
 
 ##### Endpoints
 
@@ -211,56 +194,9 @@ flutter build apk
 flutter build ios
 # or
 xcodebuild -workspace App.xcworkspace -scheme App -configuration Debug
-```
+``
 
----
 
-### For Hardware Projects:
-
-#### Bill of Materials (BOM)
-
-| Component | Quantity | Specifications | Price | Link/Source |
-|-----------|----------|----------------|-------|-------------|
-| Arduino Uno | 1 | ATmega328P, 16MHz | ₹450 | [Link] |
-| LED | 5 | Red, 5mm, 20mA | ₹5 each | [Link] |
-| Resistor | 5 | 220Ω, 1/4W | ₹1 each | [Link] |
-| Breadboard | 1 | 830 points | ₹100 | [Link] |
-| Jumper Wires | 20 | Male-to-Male | ₹50 | [Link] |
-| [Add more...] | | | | |
-
-**Total Estimated Cost:** ₹[Amount]
-
-#### Assembly Instructions
-
-**Step 1: Prepare Components**
-1. Gather all components listed in the BOM
-2. Check component specifications
-3. Prepare your workspace
-![Step 1](images/assembly-step1.jpg)
-*Caption: All components laid out*
-
-**Step 2: Build the Power Supply**
-1. Connect the power rails on the breadboard
-2. Connect Arduino 5V to breadboard positive rail
-3. Connect Arduino GND to breadboard negative rail
-![Step 2](images/assembly-step2.jpg)
-*Caption: Power connections completed*
-
-**Step 3: Add Components**
-1. Place LEDs on breadboard
-2. Connect resistors in series with LEDs
-3. Connect LED cathodes to GND
-4. Connect LED anodes to Arduino digital pins (2-6)
-![Step 3](images/assembly-step3.jpg)
-*Caption: LED circuit assembled*
-
-**Step 4: [Continue for all steps...]**
-
-**Final Assembly:**
-![Final Build](images/final-build.jpg)
-*Caption: Completed project ready for testing*
-
----
 
 ### For Scripts/CLI Tools:
 
@@ -374,35 +310,31 @@ python script.py -v --format json data.json
 
 If you used AI tools during development, document them here for transparency:
 
-**Tool Used:** [e.g., GitHub Copilot, v0.dev, Cursor, ChatGPT, Claude]
+Tool Used: Gemini, ChatGPT
 
-**Purpose:** [What you used it for]
-- Example: "Generated boilerplate React components"
-- Example: "Debugging assistance for async functions"
-- Example: "Code review and optimization suggestions"
+Purpose: - Generating boilerplate SPA navigation logic (handling page transitions).
 
-**Key Prompts Used:**
-- "Create a REST API endpoint for user authentication"
-- "Debug this async function that's causing race conditions"
-- "Optimize this database query for better performance"
+Debugging CSS flexbox layouts for the category grid.
 
-**Percentage of AI-generated code:** [Approximately X%]
+Structuring the project documentation.
 
-**Human Contributions:**
-- Architecture design and planning
-- Custom business logic implementation
-- Integration and testing
-- UI/UX design decisions
+Percentage of AI-generated code: 30%
 
+Human Contributions:
+
+UI/UX Design decisions (choosing icons and color palette).
+
+Integrating the Supabase client logic.
+
+Designing the multi-step form flow.
 *Note: Proper documentation of AI usage demonstrates transparency and earns bonus points in evaluation!*
 
 ---
 
 ## Team Contributions
 
-- [Name 1]: [Specific contributions - e.g., Frontend development, API integration, etc.]
-- [Name 2]: [Specific contributions - e.g., Backend development, Database design, etc.]
-- [Name 3]: [Specific contributions - e.g., UI/UX design, Testing, Documentation, etc.]
+- Asna A:Frontend development (HTML/CSS) and UI Design.
+- Hannah Margret M S:Backend integration (Supabase) and Auth logic.
 
 ---
 
