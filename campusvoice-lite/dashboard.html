@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="CampusVoice Dashboard - Your private student portal">
+    <title>Dashboard - CampusVoice</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <!-- LOGIN MODAL - Only visible when not logged in -->
+    <div class="login-modal" id="loginModal">
+        <div class="login-container">
+            <div class="login-card">
+                <div class="login-header">
+                    <h2><span class="brand-icon">🗣️</span> CampusVoice</h2>
+                    <p>Your Private Student Portal</p>
+                </div>
+                
+                <form class="login-form" id="loginForm">
+                    <div class="form-group">
+                        <label for="loginEmail">Email Address</label>
+                        <input 
+                            type="email" 
+                            id="loginEmail" 
+                            name="email" 
+                            required 
+                            placeholder="your.email@college.edu"
+                        >
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="loginName">Full Name</label>
+                        <input 
+                            type="text" 
+                            id="loginName" 
+                            name="name" 
+                            required 
+                            placeholder="Enter your name"
+                        >
+                    </div>
+                    
+                    <button type="submit" class="btn-login">
+                        <i class="fas fa-sign-in-alt"></i> Enter Portal
+                    </button>
+                </form>
+                
+                <p class="login-note">
+                    <i class="fas fa-lock"></i> Secure & Private - Only accessible to students
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN DASHBOARD (Hidden until user logs in) -->
+    <div class="dashboard-wrapper" id="dashboardWrapper" style="display: none;">
+        <!-- Navigation Header -->
+        <header class="navbar">
+            <div class="navbar-container">
+                <div class="navbar-brand">
+                    <h1><span class="brand-icon">🗣️</span> CampusVoice</h1>
+                </div>
+                
+                <!-- Hamburger Menu for Mobile -->
+                <button class="hamburger-menu" id="hamburgerMenu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                
+                <nav class="navbar-nav" id="mobileNav">
+                    <a href="index.html" class="nav-link">
+                        <i class="fas fa-home"></i> Home
+                    </a>
+                    <a href="dashboard.html" class="nav-link active">
+                        <i class="fas fa-chart-pie"></i> Dashboard
+                    </a>
+                    <button class="nav-link btn-logout" id="logoutBtn">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </button>
+                </nav>
+                
+                <div class="user-info" id="userInfo">
+                    <span class="user-name" id="userName"></span>
+                    <button class="btn-logout btn-logout-header" id="logoutBtnHeader">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main>
+            <div class="container">
+                <div class="dashboard-grid">
+                    
+                    <!-- LEFT COLUMN: Report New Complaint -->
+                    <section class="report-section">
+                        <div class="section-card">
+                            <div class="section-header-primary">
+                                <h2><i class="fas fa-pen-alt"></i> Report New Issue</h2>
+                                <p>Help us improve campus life</p>
+                            </div>
+                            
+                            <form class="complaint-form" id="complaintForm">
+                                <div style="text-align: center; padding: 2rem 0;">
+                                    <div style="font-size: 3rem; margin-bottom: 1rem; color: var(--primary-color);">
+                                        <i class="fas fa-clipboard-list"></i>
+                                    </div>
+                                    <h3 style="color: var(--text-dark); margin-bottom: 1rem;">Ready to report an issue?</h3>
+                                    <p style="color: var(--text-light); margin-bottom: 2rem; line-height: 1.6;">
+                                        Click the button below to fill out a detailed complaint form. Your concerns are important to us.
+                                    </p>
+                                    <a href="main.html" class="btn-submit btn-primary" style="display: inline-flex; align-items: center; gap: 0.7rem; text-decoration: none; padding: 1rem 2rem;">
+                                        <i class="fas fa-arrow-right"></i> File New Complaint
+                                    </a>
+                                </div>
+                            </form>
+                        </div>
+                    </section>
+                    
+                    <!-- RIGHT COLUMN: Complaint History -->
+                    <section class="history-section">
+                        <div class="section-card">
+                            <div class="section-header-primary">
+                                <h2><i class="fas fa-history"></i> Your Report History</h2>
+                                <p>Track and manage your submissions</p>
+                            </div>
+                            
+                            <div class="complaints-list" id="complaintsList">
+                                <div class="empty-state">
+                                    <i class="fas fa-inbox"></i>
+                                    <p>No reports yet. Your history will appear here.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    
+                </div>
+            </div>
+        </main>
+    </main>
+
+        <!-- MODAL POPUP FOR VIEWING COMPLAINT DETAILS -->
+        <div class="modal" id="complaintModal" role="dialog" aria-labelledby="modalTitle">
+            <div class="modal-content modal-glassmorphism">
+                <span class="close" onclick="closeModal()">
+                    <i class="fas fa-times"></i>
+                </span>
+                <div id="modalBody" class="modal-body">
+                    <!-- Complaint details will be loaded here by JavaScript -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-content">
+                <p>&copy; 2024 CampusVoice. Private Student Portal.</p>
+                <p class="footer-note">
+                    <i class="fas fa-shield-alt"></i> Your submissions are confidential and secure.
+                </p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- JavaScript File -->
+    <script src="app.js"></script>
+</body>
+
+</html>

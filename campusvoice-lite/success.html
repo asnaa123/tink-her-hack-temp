@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CampusVoice - Complaint Submitted Successfully</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .success-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .success-card {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            text-align: center;
+            max-width: 500px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: slideUp 0.5s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .success-icon {
+            font-size: 4rem;
+            color: #22c55e;
+            margin-bottom: 1rem;
+            animation: bounce 0.6s ease-out;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .success-card h1 {
+            color: #333;
+            margin: 1rem 0;
+            font-size: 2rem;
+        }
+
+        .success-card p {
+            color: #666;
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+        }
+
+        .success-details {
+            background: #f5f5f5;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            text-align: left;
+        }
+
+        .detail-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .detail-item:last-child {
+            border-bottom: none;
+        }
+
+        .detail-label {
+            font-weight: 600;
+            color: #667eea;
+        }
+
+        .detail-value {
+            color: #666;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .btn {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: #e5e5e5;
+            color: #333;
+            border: 1px solid #ccc;
+        }
+
+        .btn-secondary:hover {
+            background: #ddd;
+        }
+
+        .reference-number {
+            background: #e0f4ff;
+            border: 2px solid #0ea5e9;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 2rem;
+            font-family: monospace;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #0369a1;
+        }
+
+        .reference-label {
+            font-size: 0.9rem;
+            color: #0369a1;
+            margin-bottom: 0.3rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="success-container">
+        <div class="success-card">
+            <div class="success-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+
+            <h1>Complaint Submitted!</h1>
+            <p>Thank you for bringing this issue to our attention. Your complaint has been successfully recorded and assigned to the appropriate team for review.</p>
+
+            <div class="reference-number">
+                <div class="reference-label">Reference Number</div>
+                <div id="referenceId">#CV-2024-00001</div>
+            </div>
+
+            <div class="success-details">
+                <div class="detail-item">
+                    <span class="detail-label">Status</span>
+                    <span class="detail-value">Reported</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Submitted On</span>
+                    <span class="detail-value" id="submittedDate">-</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Category</span>
+                    <span class="detail-value" id="complaintCategory">-</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Severity</span>
+                    <span class="detail-value" id="complaintSeverity">-</span>
+                </div>
+            </div>
+
+            <p style="font-size: 0.9rem; color: #999;">
+                You can track your complaint status on your dashboard. We'll send updates via email as the complaint progresses through review stages.
+            </p>
+
+            <div class="action-buttons">
+                <a href="dashboard.html" class="btn btn-primary">View Dashboard</a>
+                <a href="main.html" class="btn btn-secondary">Submit Another</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Get complaint data from session/localStorage
+        document.addEventListener('DOMContentLoaded', () => {
+            const complaintData = sessionStorage.getItem('lastComplaint');
+            if (complaintData) {
+                const complaint = JSON.parse(complaintData);
+                document.getElementById('referenceId').textContent = `#CV-${complaint.id}`;
+                document.getElementById('submittedDate').textContent = complaint.timestamp || new Date().toLocaleDateString();
+                document.getElementById('complaintCategory').textContent = complaint.category || '-';
+                document.getElementById('complaintSeverity').textContent = complaint.severity || '-';
+            }
+        });
+    </script>
+</body>
+</html>

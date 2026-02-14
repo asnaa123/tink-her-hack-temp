@@ -1,0 +1,1729 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CampusVoice - Student Complaint Portal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    
+    <style>
+        /* ============================================================ */
+        /* ENHANCED STYLES & ANIMATIONS FOR INDEX */
+        /* ============================================================ */
+
+        /* Root color variables */
+        :root {
+            --primary-color: #667eea;
+            --secondary-color: #764ba2;
+            --success-color: #22c55e;
+            --error-color: #ef4444;
+            --warning-color: #f59e0b;
+            --text-dark: #333;
+            --text-light: #999;
+            --border-color: #e0e0e0;
+            --shadow-sm: 0 4px 15px rgba(0, 0, 0, 0.08);
+            --shadow-md: 0 8px 30px rgba(0, 0, 0, 0.12);
+            --shadow-lg: 0 10px 50px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                box-shadow: 0 0 0 0 rgba(102, 126, 234, 0.4);
+            }
+            50% {
+                box-shadow: 0 0 0 10px rgba(102, 126, 234, 0);
+            }
+        }
+
+        @keyframes glow {
+            0%, 100% {
+                text-shadow: 0 0 5px rgba(102, 126, 234, 0.5);
+            }
+            50% {
+                text-shadow: 0 0 15px rgba(102, 126, 234, 0.8);
+            }
+        }
+
+        @keyframes shimmer {
+            0% {
+                background-position: -1000px 0;
+            }
+            100% {
+                background-position: 1000px 0;
+            }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
+        }
+
+        @keyframes ripple {
+            from {
+                transform: scale(0);
+                opacity: 1;
+            }
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+
+        @keyframes pageTransition {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Body & General Styling */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-dark);
+            animation: pageTransition 0.5s ease-out;
+        }
+
+        /* Page & Container Styling */
+        .page {
+            display: none;
+            opacity: 0;
+            transition: all 0.4s ease-out;
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+
+        .page.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .page-container {
+            width: 100%;
+            max-width: 500px;
+            margin: auto;
+            padding: 2rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* Card Styling */
+        .login-card,
+        .info-card,
+        .selector-card,
+        .success-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: var(--shadow-lg);
+            width: 100%;
+            animation: slideInUp 0.6s ease-out;
+            transition: all 0.3s ease;
+        }
+
+        .login-card:hover,
+        .info-card:hover,
+        .selector-card:hover,
+        .success-card:hover {
+            box-shadow: 0 15px 60px rgba(0, 0, 0, 0.25);
+            transform: translateY(-5px);
+        }
+
+        /* Header Styling */
+        .login-header,
+        .page-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            animation: slideInDown 0.6s ease-out 0.1s both;
+        }
+
+        .login-header .logo {
+            font-size: 3.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        .login-header h1,
+        .page-header h2 {
+            color: var(--text-dark);
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            animation: glow 3s ease-in-out infinite;
+            letter-spacing: 1px;
+        }
+
+        .login-header p,
+        .page-header p {
+            color: var(--text-light);
+            font-size: 1rem;
+            margin: 0;
+        }
+
+        /* Form Group Styling */
+        .form-group {
+            margin-bottom: 1.5rem;
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.6rem;
+            color: var(--text-dark);
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.9rem;
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            font-family: inherit;
+            background: white;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            transform: scale(1.01);
+        }
+
+        .form-group input:hover,
+        .form-group select:hover,
+        .form-group textarea:hover {
+            border-color: var(--primary-color);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .form-group small {
+            display: block;
+            margin-top: 0.5rem;
+            color: var(--text-light);
+            font-size: 0.85rem;
+        }
+
+        .form-group small.hint {
+            color: var(--primary-color);
+            font-weight: 500;
+        }
+
+        .form-group .char-count {
+            text-align: right;
+            color: var(--text-light);
+        }
+
+        .form-group .required {
+            color: var(--error-color);
+        }
+
+        /* Form Section */
+        .form-section {
+            margin-bottom: 2rem;
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        .section-title {
+            color: var(--primary-color);
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .section-title i {
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        /* Button Styling */
+        .btn {
+            padding: 1rem;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            width: 100%;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary,
+        .btn-ghost {
+            background: rgba(102, 126, 234, 0.1);
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+            width: 100%;
+            font-weight: 600;
+        }
+
+        .btn-secondary:hover,
+        .btn-ghost:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-ghost {
+            background: transparent;
+        }
+
+        .btn-full {
+            width: 100%;
+        }
+
+        .btn-submit {
+            width: 100%;
+            margin-top: 1.5rem;
+        }
+
+        /* Button Group */
+        .button-group {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .button-group .btn {
+            flex: 1;
+            min-width: 150px;
+        }
+
+        /* Category Grid */
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .category-btn {
+            padding: 1.5rem;
+            background: white;
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.8rem;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--text-dark);
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        .category-btn i {
+            font-size: 2rem;
+            color: var(--primary-color);
+            transition: all 0.3s ease;
+        }
+
+        .category-btn:hover {
+            border-color: var(--primary-color);
+            box-shadow: var(--shadow-md);
+            transform: translateY(-5px);
+        }
+
+        .category-btn:hover i {
+            animation: bounce 0.5s ease-out;
+        }
+
+        .category-btn.selected {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.15);
+        }
+
+        /* Priority Grid */
+        .priority-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .priority-btn {
+            padding: 1.2rem;
+            background: white;
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.8rem;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        .priority-btn i {
+            font-size: 1.8rem;
+        }
+
+        .priority-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .priority-low i { color: #3b82f6; }
+        .priority-medium i { color: #f59e0b; }
+        .priority-high i { color: #ef4444; }
+
+        .priority-btn.selected {
+            border-width: 3px;
+            box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.05);
+        }
+
+        .priority-low.selected {
+            border-color: #3b82f6;
+        }
+
+        .priority-medium.selected {
+            border-color: #f59e0b;
+        }
+
+        .priority-high.selected {
+            border-color: #ef4444;
+        }
+
+        /* Divider */
+        .divider {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin: 1.5rem 0;
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border-color);
+        }
+
+        /* Error & Validation */
+        .validation-error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            animation: slideInUp 0.3s ease-out;
+        }
+
+        .validation-error i {
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        /* Success Section */
+        .success-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2.5rem;
+            margin: 0 auto 1.5rem;
+            animation: slideInDown 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        .success-title {
+            text-align: center;
+            color: var(--text-dark);
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+            animation: slideInUp 0.6s ease-out 0.2s both;
+        }
+
+        .success-subtitle {
+            text-align: center;
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+            animation: slideInUp 0.6s ease-out 0.3s both;
+        }
+
+        .reference-box {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+            border: 2px solid var(--primary-color);
+            border-radius: 10px;
+            padding: 1.5rem;
+            text-align: center;
+            margin-bottom: 1.5rem;
+            animation: slideInUp 0.6s ease-out 0.4s both;
+        }
+
+        .reference-box small {
+            display: block;
+            color: var(--text-light);
+            font-size: 0.85rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .reference-box code {
+            display: block;
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            font-family: 'Courier New', monospace;
+            letter-spacing: 2px;
+        }
+
+        /* Progress Tracker */
+        .progress-tracker {
+            margin: 2rem 0;
+            animation: slideInUp 0.6s ease-out 0.5s both;
+        }
+
+        .progress-tracker h3 {
+            color: var(--text-dark);
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .progress-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+        }
+
+        .progress-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .progress-step span {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            text-align: center;
+            max-width: 80px;
+        }
+
+        .step-circle {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: white;
+            border: 3px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: var(--text-light);
+            transition: all 0.3s ease;
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        .progress-step.completed .step-circle {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            border-color: var(--primary-color);
+            color: white;
+        }
+
+        .progress-line {
+            flex: 1;
+            height: 3px;
+            background: var(--border-color);
+            position: relative;
+            margin: 0 0.5rem;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            width: 0%;
+            transition: width 0.6s ease-out;
+        }
+
+        /* Info Box */
+        .info-box {
+            background: #f0f4ff;
+            border-left: 4px solid var(--primary-color);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+            animation: slideInUp 0.6s ease-out;
+        }
+
+        .info-box p {
+            color: var(--text-dark);
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        .info-box strong {
+            color: var(--primary-color);
+        }
+
+        /* Footer */
+        .login-footer {
+            text-align: center;
+            color: var(--text-light);
+            font-size: 0.9rem;
+            margin-top: 1.5rem;
+            animation: fadeIn 0.8s ease-out 0.3s both;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 480px) {
+            .page-container {
+                padding: 1rem;
+            }
+
+            .login-card,
+            .info-card,
+            .selector-card,
+            .success-card {
+                padding: 1.5rem;
+            }
+
+            .login-header h1,
+            .page-header h2 {
+                font-size: 1.5rem;
+            }
+
+            .login-header .logo {
+                font-size: 2.5rem;
+            }
+
+            .category-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .priority-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+
+            .button-group .btn {
+                flex: 1;
+                min-width: auto;
+            }
+
+            .progress-bar {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .progress-line {
+                width: 3px;
+                height: 40px;
+                margin: 0;
+            }
+        }
+
+        /* Accessibility */
+        *:focus-visible {
+            outline: 2px solid var(--primary-color);
+            outline-offset: 2px;
+        }
+
+        /* Loading state */
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .loading {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- ============================================================ -->
+    <!-- PAGE 0: REGISTER GATEWAY -->
+    <!-- ============================================================ -->
+    <div id="page-0" class="page active">
+        <div class="page-container">
+            <div class="login-card">
+                <!-- Header -->
+                <div class="login-header">
+                    <div class="logo">
+                        <i class="fas fa-megaphone"></i>
+                    </div>
+                    <h1>CampusVoice</h1>
+                    <p>Let your voice be heard</p>
+                </div>
+
+                <!-- Register Form -->
+                <form id="registerForm" onsubmit="handleRegister(event)">
+                    <div class="form-group">
+                        <label for="regStudentId">Student ID</label>
+                        <input 
+                            type="text" 
+                            id="regStudentId" 
+                            placeholder="Enter your Student ID"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="regEmail">Email Address</label>
+                        <input 
+                            type="email" 
+                            id="regEmail" 
+                            placeholder="your.email@college.edu"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="regFullName">Full Name</label>
+                        <input 
+                            type="text" 
+                            id="regFullName" 
+                            placeholder="Your full name"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="regPassword">Create Password</label>
+                        <input 
+                            type="password" 
+                            id="regPassword" 
+                            placeholder="Minimum 8 characters"
+                            required
+                            minlength="8"
+                        >
+                        <small class="hint">
+                            <i class="fas fa-lock"></i> Min 8 characters for security
+                        </small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="regConfirmPassword">Confirm Password</label>
+                        <input 
+                            type="password" 
+                            id="regConfirmPassword" 
+                            placeholder="Re-enter your password"
+                            required
+                        >
+                    </div>
+
+                    <!-- Error Message -->
+                    <div id="registerError" class="validation-error" style="display: none;">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <span id="registerErrorText"></span>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-full">
+                        <i class="fas fa-user-plus"></i> Create Account
+                    </button>
+                </form>
+
+                <!-- Divider -->
+                <div class="divider">
+                    <span>or</span>
+                </div>
+
+                <!-- Login Link -->
+                <button 
+                    type="button" 
+                    class="btn btn-secondary btn-full"
+                    onclick="goToPage1()"
+                >
+                    <i class="fas fa-sign-in-alt"></i> Already have an account? Login
+                </button>
+
+                <!-- Footer -->
+                <p class="login-footer">
+                    🔒 Your data is secure and encrypted
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- PAGE 1: LOGIN GATEWAY -->
+    <!-- ============================================================ -->
+    <div id="page-1" class="page active">
+        <div class="page-container">
+            <div class="login-card">
+                <!-- Header -->
+                <div class="login-header">
+                    <div class="logo">
+                        <i class="fas fa-megaphone"></i>
+                    </div>
+                    <h1>CampusVoice</h1>
+                    <p>Let your voice be heard</p>
+                </div>
+
+                <!-- Login Form -->
+                <form id="loginForm" onsubmit="handleLogin(event)">
+                    <div class="form-group">
+                        <label for="studentId">Student ID</label>
+                        <input 
+                            type="text" 
+                            id="studentId" 
+                            placeholder="Enter your Student ID"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input 
+                            type="password" 
+                            id="password" 
+                            placeholder="Enter your password"
+                            required
+                        >
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-full">
+                        <i class="fas fa-sign-in-alt"></i> Login
+                    </button>
+                </form>
+
+                <!-- Divider -->
+                <div class="divider">
+                    <span>or</span>
+                </div>
+
+                <!-- Anonymous Option -->
+                <button 
+                    type="button" 
+                    class="btn btn-secondary btn-full"
+                    onclick="startAnonymous()"
+                >
+                    <i class="fas fa-mask"></i> Report Anonymously
+                </button>
+
+                <!-- Divider -->
+                <div class="divider">
+                    <span>new user?</span>
+                </div>
+
+                <!-- Register Link -->
+                <button 
+                    type="button" 
+                    class="btn btn-ghost btn-full"
+                    onclick="goToPage0()"
+                >
+                    <i class="fas fa-user-plus"></i> Create New Account
+                </button>
+
+                <!-- Footer -->
+                <p class="login-footer">
+                    🔒 Your privacy is important to us
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- PAGE 2: INFORMATION GATHERING -->
+    <!-- ============================================================ -->
+    <div id="page-2" class="page">
+        <div class="page-container">
+            <div class="info-card">
+                <!-- Header -->
+                <div class="page-header">
+                    <h2>Tell us about yourself</h2>
+                    <p>We need some basic information to process your complaint</p>
+                </div>
+
+                <!-- Form -->
+                <form id="infoForm" onsubmit="goToPage3(event)">
+                    <!-- Name Field -->
+                    <div class="form-group">
+                        <label for="fullName">Your Name</label>
+                        <input 
+                            type="text" 
+                            id="fullName"
+                            placeholder="Your full name"
+                        >
+                        <small id="nameHint" class="hint" style="display: none;">
+                            <i class="fas fa-lock"></i> Your identity is private
+                        </small>
+                    </div>
+
+                    <!-- Email Field -->
+                    <div class="form-group">
+                        <label for="email">
+                            Email Address <span class="required">*</span>
+                        </label>
+                        <input 
+                            type="email" 
+                            id="email"
+                            placeholder="your.email@college.edu"
+                            required
+                        >
+                    </div>
+
+                    <!-- Title Field -->
+                    <div class="form-group">
+                        <label for="issueTitle">
+                            Brief Title <span class="required">*</span>
+                        </label>
+                        <input 
+                            type="text" 
+                            id="issueTitle"
+                            placeholder="e.g., Water supply issue in Hostel A"
+                            maxlength="50"
+                            required
+                        >
+                        <small class="char-count">
+                            <span id="titleCount">0</span>/50
+                        </small>
+                    </div>
+
+                    <!-- Button Group -->
+                    <div class="button-group">
+                        <button type="button" class="btn btn-ghost" onclick="goBackToLogin()">
+                            <i class="fas fa-arrow-left"></i> Back
+                        </button>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-arrow-right"></i> Next
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- PAGE 3: MULTI-STEP SELECTOR -->
+    <!-- ============================================================ -->
+    <div id="page-3" class="page">
+        <div class="page-container">
+            <div class="selector-card">
+                <!-- Header -->
+                <div class="page-header">
+                    <h2>Describe your complaint</h2>
+                    <p>Select a category and priority level</p>
+                </div>
+
+                <!-- Form -->
+                <form id="selectorForm" onsubmit="submitComplaint(event)">
+                    <!-- Section A: Categories -->
+                    <div class="form-section">
+                        <h3 class="section-title">
+                            <i class="fas fa-list"></i> Category <span class="required">*</span>
+                        </h3>
+                        <div class="category-grid">
+                            <!-- Harassment -->
+                            <button 
+                                type="button" 
+                                class="category-btn"
+                                data-category="harassment"
+                                onclick="selectCategory(this)"
+                                title="Bullying, discrimination, harassment"
+                            >
+                                <i class="fas fa-shield-alt"></i>
+                                <span>Harassment</span>
+                            </button>
+
+                            <!-- Water -->
+                            <button 
+                                type="button" 
+                                class="category-btn"
+                                data-category="water"
+                                onclick="selectCategory(this)"
+                                title="Water supply issues"
+                            >
+                                <i class="fas fa-droplet"></i>
+                                <span>Water</span>
+                            </button>
+
+                            <!-- Hostel -->
+                            <button 
+                                type="button" 
+                                class="category-btn"
+                                data-category="hostel"
+                                onclick="selectCategory(this)"
+                                title="Hostel facilities"
+                            >
+                                <i class="fas fa-bed"></i>
+                                <span>Hostel</span>
+                            </button>
+
+                            <!-- Academic -->
+                            <button 
+                                type="button" 
+                                class="category-btn"
+                                data-category="academic"
+                                onclick="selectCategory(this)"
+                                title="Academic issues"
+                            >
+                                <i class="fas fa-book"></i>
+                                <span>Academic</span>
+                            </button>
+                        </div>
+                        <input type="hidden" id="selectedCategory" required>
+                    </div>
+
+                    <!-- Section B: Priorities -->
+                    <div class="form-section">
+                        <h3 class="section-title">
+                            <i class="fas fa-exclamation-circle"></i> Priority <span class="required">*</span>
+                        </h3>
+                        <div class="priority-grid">
+                            <button 
+                                type="button" 
+                                class="priority-btn priority-low"
+                                data-priority="low"
+                                onclick="selectPriority(this)"
+                            >
+                                <i class="fas fa-circle"></i>
+                                <span>Low</span>
+                            </button>
+                            <button 
+                                type="button" 
+                                class="priority-btn priority-medium"
+                                data-priority="medium"
+                                onclick="selectPriority(this)"
+                            >
+                                <i class="fas fa-circle"></i>
+                                <span>Medium</span>
+                            </button>
+                            <button 
+                                type="button" 
+                                class="priority-btn priority-high"
+                                data-priority="high"
+                                onclick="selectPriority(this)"
+                            >
+                                <i class="fas fa-circle"></i>
+                                <span>High</span>
+                            </button>
+                        </div>
+                        <input type="hidden" id="selectedPriority" required>
+                    </div>
+
+                    <!-- Section C: Description -->
+                    <div class="form-section">
+                        <h3 class="section-title">
+                            <i class="fas fa-file-alt"></i> Description <span class="required">*</span>
+                        </h3>
+                        <textarea 
+                            id="complaintDescription"
+                            placeholder="Describe your complaint in detail..."
+                            rows="5"
+                            maxlength="500"
+                            required
+                        ></textarea>
+                        <small class="char-count">
+                            <span id="descCount">0</span>/500
+                        </small>
+                    </div>
+
+                    <!-- Error Message -->
+                    <div id="validationError" class="validation-error" style="display: none;">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <span id="errorText"></span>
+                    </div>
+
+                    <!-- Button Group -->
+                    <div class="button-group">
+                        <button type="button" class="btn btn-ghost" onclick="goToPage2()">
+                            <i class="fas fa-arrow-left"></i> Back
+                        </button>
+                        <button type="submit" class="btn btn-primary btn-submit">
+                            <i class="fas fa-paper-plane"></i> Submit Complaint
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- PAGE 4: SUCCESS & PROGRESS -->
+    <!-- ============================================================ -->
+    <div id="page-4" class="page">
+        <div class="page-container">
+            <div class="success-card">
+                <!-- Success Icon -->
+                <div class="success-icon">
+                    <i class="fas fa-check"></i>
+                </div>
+
+                <!-- Title -->
+                <h2 class="success-title">Complaint Submitted!</h2>
+                <p class="success-subtitle">
+                    Thank you for bringing this to our attention. Your complaint has been recorded and assigned a reference ID.
+                </p>
+
+                <!-- Reference ID -->
+                <div class="reference-box">
+                    <small>Reference ID</small>
+                    <code id="referenceId">CV-2026021401</code>
+                </div>
+
+                <!-- Progress Tracker -->
+                <div class="progress-tracker">
+                    <h3>Complaint Status</h3>
+                    <div class="progress-bar">
+                        <div class="progress-step completed">
+                            <div class="step-circle">
+                                <i class="fas fa-check"></i>
+                            </div>
+                            <span>Reported</span>
+                        </div>
+                        <div class="progress-line">
+                            <div class="progress-fill" style="width: 0%"></div>
+                        </div>
+                        <div class="progress-step">
+                            <div class="step-circle">2</div>
+                            <span>Under Review</span>
+                        </div>
+                        <div class="progress-line">
+                            <div class="progress-fill" style="width: 0%"></div>
+                        </div>
+                        <div class="progress-step">
+                            <div class="step-circle">3</div>
+                            <span>Resolved</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Info Box -->
+                <div class="info-box">
+                    <p>
+                        <strong>✓ What happens next?</strong><br>
+                        Our team will review your complaint and keep you updated on the progress.
+                    </p>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="button-group">
+                    <button type="button" class="btn btn-secondary" onclick="submitAnother()">
+                        <i class="fas fa-plus"></i> File Another
+                    </button>
+                    <button type="button" class="btn btn-primary" onclick="goToLogin()">
+                        <i class="fas fa-home"></i> Back to Login
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Supabase Library - MUST LOAD FIRST -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        // Verify Supabase CDN loaded
+        setTimeout(() => {
+            if (typeof window.supabase === 'undefined') {
+                console.error('❌ CRITICAL: Supabase CDN failed to load!');
+                console.error('URL: https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2');
+                console.error('Check Network tab in browser DevTools for details');
+                // Try alternative CDN
+                console.log('⏳ Trying alternative CDN...');
+                const script = document.createElement('script');
+                script.src = 'https://unpkg.com/@supabase/supabase-js@2';
+                script.onerror = () => console.error('❌ Alternative CDN also failed');
+                document.head.appendChild(script);
+            } else {
+                console.log('✅ Supabase CDN loaded successfully');
+            }
+        }, 1000);
+    </script>
+    
+    <!-- Supabase Client Setup (must load after library) -->
+    <script src="config.js"></script>
+    
+    <!-- App Setup -->
+    <script src="app.js"></script>
+    
+    <!-- Page Navigation and Login Handler -->
+    <script>
+        // ============================================================
+        // WAIT FOR SUPABASE TO BE READY
+        // ============================================================
+        let retryCount = 0;
+        let maxRetries = 50;
+
+        /**
+         * Wait for submitComplaintToSupabase to be available
+         * and submit the complaint
+         */
+        async function waitForSupabaseAndSubmit(complaintData) {
+            // Check if function and supabase CDN are available
+            if (typeof submitComplaintToSupabase !== 'undefined' && typeof window.supabase !== 'undefined') {
+                console.log('✅ Supabase is ready, submitting complaint...');
+                return submitComplaintToSupabase(complaintData);
+            }
+
+            // Log what's available for debugging
+            if (retryCount === 0) {
+                console.log('🔍 Debug Info:');
+                console.log('   - window.supabase:', typeof window.supabase);
+                console.log('   - submitComplaintToSupabase:', typeof submitComplaintToSupabase);
+                console.log('   - window.submitComplaintToSupabase:', typeof window.submitComplaintToSupabase);
+            }
+
+            // Retry after a short delay
+            if (retryCount < maxRetries) {
+                retryCount++;
+                if (retryCount % 10 === 0 || retryCount === 1) {
+                    console.log('⏳ Waiting for Supabase... (attempt ' + retryCount + '/' + maxRetries + ')');
+                }
+                return new Promise(resolve => {
+                    setTimeout(() => {
+                        resolve(waitForSupabaseAndSubmit(complaintData));
+                    }, 100);
+                });
+            }
+
+            // Failed to load - provide detailed error info
+            console.error('❌ Supabase did not load after ' + maxRetries + ' attempts');
+            console.error('   Final Debug Info:');
+            console.error('   - window.supabase:', typeof window.supabase);
+            console.error('   - submitComplaintToSupabase:', typeof submitComplaintToSupabase);
+            console.error('   Check browser Network tab to see if CDN script loaded');
+            return {
+                success: false,
+                error: 'Supabase library failed to load. Please refresh the page and check your internet connection.'
+            };
+        }
+
+        function goToPage0() {
+            document.getElementById('page-0').classList.add('active');
+            document.getElementById('page-1').classList.remove('active');
+            document.getElementById('page-2').classList.remove('active');
+        }
+
+        function goToPage1() {
+            document.getElementById('page-0').classList.remove('active');
+            document.getElementById('page-1').classList.add('active');
+            document.getElementById('page-2').classList.remove('active');
+        }
+
+        function goToPage2() {
+            document.getElementById('page-0').classList.remove('active');
+            document.getElementById('page-1').classList.remove('active');
+            document.getElementById('page-2').classList.add('active');
+            
+            // Scroll to top
+            setTimeout(() => {
+                window.scrollTo(0, 0);
+            }, 100);
+        }
+
+        function goToLogin() {
+            goToPage1();
+        }
+
+        function startAnonymous() {
+            window.location.href = 'main.html';
+        }
+
+        function submitAnother() {
+            goToPage2();
+        }
+
+        // Custom handleLogin for index.html
+        function handleLogin(event) {
+            event.preventDefault();
+            
+            const studentId = document.getElementById('studentId').value.trim();
+            const password = document.getElementById('password').value.trim();
+            
+            if (!studentId || !password) {
+                alert('Please fill in all fields');
+                return;
+            }
+            
+            // Create user object
+            const user = {
+                id: studentId,
+                studentId: studentId,
+                joinedDate: new Date().toISOString()
+            };
+            
+            // Save to localStorage
+            localStorage.setItem('campusvoice_current_user', JSON.stringify(user));
+            
+            console.log('✓ User logged in with Student ID:', studentId);
+            
+            // Redirect to main dashboard
+            window.location.href = 'main.html';
+        }
+
+        // Custom handleRegister for index.html
+        function handleRegister(event) {
+            event.preventDefault();
+            
+            const studentId = document.getElementById('regStudentId').value.trim();
+            const email = document.getElementById('regEmail').value.trim();
+            const fullName = document.getElementById('regFullName').value.trim();
+            const password = document.getElementById('regPassword').value.trim();
+            const confirmPassword = document.getElementById('regConfirmPassword').value.trim();
+            
+            // Validation
+            if (!studentId || !email || !fullName || !password || !confirmPassword) {
+                showError('registerError', 'registerErrorText', 'Please fill in all fields');
+                return;
+            }
+            
+            if (password !== confirmPassword) {
+                showError('registerError', 'registerErrorText', 'Passwords do not match');
+                return;
+            }
+            
+            if (password.length < 8) {
+                showError('registerError', 'registerErrorText', 'Password must be at least 8 characters');
+                return;
+            }
+            
+            // Create user object
+            const user = {
+                id: studentId,
+                studentId: studentId,
+                email: email,
+                name: fullName,
+                joinedDate: new Date().toISOString()
+            };
+            
+            // Save to localStorage
+            localStorage.setItem('campusvoice_current_user', JSON.stringify(user));
+            
+            console.log('✓ Account created for:', fullName);
+            
+            // Redirect to dashboard
+            window.location.href = 'main.html';
+        }
+
+        function showError(errorDiv, errorText, message) {
+            const div = document.getElementById(errorDiv);
+            const text = document.getElementById(errorText);
+            text.textContent = message;
+            div.style.display = 'block';
+            
+            setTimeout(() => {
+                div.style.display = 'none';
+            }, 5000);
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            // Show login page by default
+            goToPage1();
+
+            // Setup form interactions
+            setupFormInteractions();
+        });
+
+        // ============================================================
+        // ENHANCED INTERACTIONS & ANIMATIONS
+        // ============================================================
+
+        function setupFormInteractions() {
+            // Character count for title
+            const titleInput = document.getElementById('issueTitle');
+            if (titleInput) {
+                titleInput.addEventListener('input', function() {
+                    document.getElementById('titleCount').textContent = this.value.length;
+                });
+            }
+
+            // Character count for description
+            const descInput = document.getElementById('complaintDescription');
+            if (descInput) {
+                descInput.addEventListener('input', function() {
+                    document.getElementById('descCount').textContent = this.value.length;
+                });
+            }
+
+            // Category selection
+            document.querySelectorAll('.category-btn').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    selectCategory(this);
+                });
+            });
+
+            // Priority selection
+            document.querySelectorAll('.priority-btn').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    selectPriority(this);
+                });
+            });
+
+            // Form input animations
+            setupInputAnimations();
+        }
+
+        function setupInputAnimations() {
+            document.querySelectorAll('input, select, textarea').forEach(field => {
+                field.addEventListener('focus', function() {
+                    this.style.transition = 'all 0.3s ease';
+                });
+
+                field.addEventListener('blur', function() {
+                    if (!this.value) {
+                        this.style.backgroundColor = '';
+                    }
+                });
+
+                // Add shake animation on invalid input
+                field.addEventListener('invalid', function() {
+                    this.style.animation = 'shake 0.4s ease-in-out';
+                    setTimeout(() => {
+                        this.style.animation = '';
+                    }, 400);
+                });
+            });
+        }
+
+        function selectCategory(btn) {
+            // Remove previous selection
+            document.querySelectorAll('.category-btn').forEach(b => {
+                b.classList.remove('selected');
+            });
+
+            // Add selection to clicked button
+            btn.classList.add('selected');
+            document.getElementById('selectedCategory').value = btn.dataset.category;
+
+            // Animation
+            btn.style.animation = 'pulse 0.6s ease-out';
+        }
+
+        function selectPriority(btn) {
+            // Remove previous selection from same type
+            const buttons = btn.parentElement.querySelectorAll('.priority-btn');
+            buttons.forEach(b => {
+                b.classList.remove('selected');
+            });
+
+            // Add selection to clicked button
+            btn.classList.add('selected');
+            document.getElementById('selectedPriority').value = btn.dataset.priority;
+
+            // Animation
+            btn.style.animation = 'pulse 0.6s ease-out';
+        }
+
+        function goToPage3(e) {
+            e.preventDefault();
+            
+            const fullName = document.getElementById('fullName').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const issueTitle = document.getElementById('issueTitle').value.trim();
+
+            if (!email || !issueTitle) {
+                alert('Please fill required fields');
+                return;
+            }
+
+            // Store data in sessionStorage
+            sessionStorage.setItem('complaintData', JSON.stringify({
+                fullName,
+                email,
+                issueTitle
+            }));
+
+            // Show page 3 with animation
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById('page-3').classList.add('active');
+
+            // Scroll to top
+            setTimeout(() => window.scrollTo(0, 0), 100);
+        }
+
+        function submitComplaint(e) {
+            e.preventDefault();
+
+            const category = document.getElementById('selectedCategory').value;
+            const priority = document.getElementById('selectedPriority').value;
+            const description = document.getElementById('complaintDescription').value.trim();
+
+            if (!category || !priority || !description) {
+                showValidationError('Please select category, priority, and enter description');
+                return;
+            }
+
+            // Get stored data
+            const storedData = JSON.parse(sessionStorage.getItem('complaintData') || '{}');
+
+            // Create complaint object for Supabase
+            // Note: id, user_id, created_at, updated_at are auto-generated by Supabase
+            const complaint = {
+                name: storedData.fullName || 'Anonymous',
+                email: storedData.email || 'unknown@student.edu',
+                message: description,
+                title: storedData.issueTitle,
+                category: category,
+                severity: priority,
+                location: storedData.location || 'Not specified',
+                is_anonymous: storedData.isAnonymous || false,
+                status: 'reported'
+            };
+
+            // Validate required fields
+            if (!complaint.name || !complaint.email || !complaint.title || !complaint.message || !complaint.category) {
+                alert('❌ Missing required fields. Please fill in all information.');
+                return;
+            }
+
+            // Add animation to submit button
+            const btn = e.target.querySelector('.btn-submit');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<span class="loading"></span> Submitting...';
+            btn.disabled = true;
+
+            // Submit to Supabase with retry logic
+            retryCount = 0; // Reset retry counter
+            waitForSupabaseAndSubmit(complaint)
+                .then(result => {
+                    if (result.success) {
+                        // Success - show alert
+                        alert('✅ Complaint submitted successfully! Reference ID: ' + (result.data[0]?.id || 'CV-' + Date.now()));
+                        console.log('✅ Complaint saved to Supabase:', result.data);
+
+                        // Store for UI display
+                        const uiComplaint = {
+                            id: result.data[0]?.id || 'CV-' + Date.now(),
+                            ...complaint
+                        };
+                        sessionStorage.setItem('lastComplaint', JSON.stringify(uiComplaint));
+
+                        // Show success page
+                        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+                        document.getElementById('page-4').classList.add('active');
+
+                        // Update reference ID
+                        document.getElementById('referenceId').textContent = uiComplaint.id;
+
+                        // Trigger success animation
+                        const icon = document.querySelector('.success-icon');
+                        if (icon) {
+                            icon.style.animation = 'pulse 1s ease-out 3';
+                        }
+
+                        // Scroll to top
+                        window.scrollTo(0, 0);
+
+                    } else {
+                        // Error - show alert and log
+                        alert('❌ Error: ' + result.error);
+                        console.error('❌ Supabase Error:', result.error, result.details);
+                        showValidationError('Failed to submit complaint: ' + result.error);
+                    }
+
+                    // Reset button
+                    btn.innerHTML = originalText;
+                    btn.disabled = false;
+                })
+                .catch(err => {
+                    console.error('❌ Unexpected error:', err);
+                    alert('❌ Unexpected error: ' + err.message);
+                    btn.innerHTML = originalText;
+                    btn.disabled = false;
+                });
+        }
+
+        function showValidationError(message) {
+            const errorDiv = document.getElementById('validationError');
+            const errorText = document.getElementById('errorText');
+            
+            if (errorDiv && errorText) {
+                errorText.textContent = message;
+                errorDiv.style.display = 'flex';
+                errorDiv.style.animation = 'slideInUp 0.3s ease-out';
+
+                setTimeout(() => {
+                    errorDiv.style.display = 'none';
+                }, 4000);
+            }
+        }
+
+        function goToPage2() {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById('page-2').classList.add('active');
+            window.scrollTo(0, 0);
+        }
+
+        function goBackToLogin() {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById('page-1').classList.add('active');
+            window.scrollTo(0, 0);
+        }
+
+        // Button ripple effect
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('btn')) {
+                const btn = e.target;
+                const rect = btn.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+
+                const ripple = document.createElement('span');
+                ripple.style.position = 'absolute';
+                ripple.style.left = x + 'px';
+                ripple.style.top = y + 'px';
+                ripple.style.width = '20px';
+                ripple.style.height = '20px';
+                ripple.style.background = 'rgba(255, 255, 255, 0.5)';
+                ripple.style.borderRadius = '50%';
+                ripple.style.pointerEvents = 'none';
+                ripple.style.animation = 'ripple 0.6s ease-out forwards';
+
+                btn.appendChild(ripple);
+                setTimeout(() => ripple.remove(), 600);
+            }
+        });
+    </script>
+</body>
+
+</html>

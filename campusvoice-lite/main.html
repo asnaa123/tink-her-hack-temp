@@ -1,0 +1,1053 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CampusVoice - Main Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    
+    <style>
+        /* ============================================================ */
+        /* ENHANCED STYLES & ANIMATIONS */
+        /* ============================================================ */
+
+        /* Page transition animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                box-shadow: 0 0 0 0 rgba(102, 126, 234, 0.4);
+            }
+            50% {
+                box-shadow: 0 0 0 10px rgba(102, 126, 234, 0);
+            }
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-5px);
+            }
+        }
+
+        @keyframes shimmer {
+            0% {
+                background-position: -1000px 0;
+            }
+            100% {
+                background-position: 1000px 0;
+            }
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                max-height: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                max-height: 500px;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes glow {
+            0%, 100% {
+                text-shadow: 0 0 5px rgba(102, 126, 234, 0.5);
+            }
+            50% {
+                text-shadow: 0 0 15px rgba(102, 126, 234, 0.8);
+            }
+        }
+
+        /* Dashboard wrapper */
+        .dashboard-wrapper {
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        /* Navbar enhancements */
+        .navbar {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            animation: slideDown 0.5s ease-out;
+        }
+
+        .navbar-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            color: white;
+            font-weight: bold;
+            animation: slideInLeft 0.6s ease-out;
+        }
+
+        .logo-section i {
+            font-size: 2rem;
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        .logo-section h2 {
+            margin: 0;
+            font-size: 1.8rem;
+            letter-spacing: 1px;
+            animation: glow 3s ease-in-out infinite;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            animation: slideInRight 0.6s ease-out;
+        }
+
+        .nav-link {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: white;
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: 100%;
+        }
+
+        .nav-link:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .logout-btn {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 0.6rem 1.2rem;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .logout-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Content wrapper */
+        .content-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            padding: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            animation: fadeIn 0.8s ease-out 0.2s both;
+        }
+
+        /* Card styling */
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            animation: slideInLeft 0.6s ease-out;
+        }
+
+        .card:hover {
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+            transform: translateY(-5px);
+        }
+
+        .card h3 {
+            color: #333;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+            position: relative;
+            padding-bottom: 1rem;
+        }
+
+        .card h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            border-radius: 2px;
+            animation: shimmer 2s infinite;
+        }
+
+        .complaints-section .card {
+            animation: slideInRight 0.6s ease-out;
+        }
+
+        /* Form styling */
+        .form-group {
+            margin-bottom: 1.5rem;
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.6rem;
+            color: #333;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            transform: scale(1.01);
+        }
+
+        .form-group input:hover,
+        .form-group select:hover,
+        .form-group textarea:hover {
+            border-color: #667eea;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .form-group.checkbox {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            margin: 1.5rem 0;
+        }
+
+        .form-group.checkbox input {
+            width: auto;
+            cursor: pointer;
+            accent-color: #667eea;
+        }
+
+        .form-group.checkbox label {
+            margin-bottom: 0;
+            cursor: pointer;
+        }
+
+        /* Buttons */
+        .btn-primary {
+            width: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            margin-top: 1rem;
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.2);
+            transition: left 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-primary:hover::before {
+            left: 100%;
+        }
+
+        .btn-primary:active {
+            transform: translateY(-1px);
+        }
+
+        /* Message display */
+        .message {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 600;
+            animation: slideDown 0.3s ease-out;
+            display: none;
+        }
+
+        .message:not(:empty) {
+            display: block;
+        }
+
+        .message.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .message.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        /* Complaints list */
+        .complaints-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .complaint-card {
+            background: linear-gradient(135deg, #f5f7fa 0%, #f0f2f5 100%);
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            animation: slideInLeft 0.6s ease-out;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .complaint-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .complaint-card:hover {
+            border-color: #667eea;
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.15);
+            transform: translateX(5px);
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9ff 100%);
+        }
+
+        .complaint-card:hover::before {
+            left: 100%;
+        }
+
+        .complaint-header {
+            margin-bottom: 1rem;
+        }
+
+        .complaint-header h3 {
+            color: #667eea;
+            margin: 0 0 0.5rem 0;
+            font-size: 1.1rem;
+            transition: color 0.3s ease;
+        }
+
+        .complaint-card:hover .complaint-header h3 {
+            color: #764ba2;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 2rem;
+            color: #999;
+        }
+
+        .empty-state i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        /* Modal styling */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            animation: fadeIn 0.3s ease-out;
+            backdrop-filter: blur(3px);
+        }
+
+        .modal.show {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 10px 50px rgba(0, 0, 0, 0.3);
+            animation: slideInLeft 0.3s ease-out;
+            position: relative;
+        }
+
+        .close {
+            position: absolute;
+            right: 1.5rem;
+            top: 1.5rem;
+            font-size: 2rem;
+            font-weight: bold;
+            color: #999;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        .close:hover {
+            color: #667eea;
+            background: #f0f0f0;
+            transform: rotate(90deg);
+        }
+
+        /* Responsive design */
+        @media (max-width: 968px) {
+            .content-wrapper {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .navbar-container {
+                padding: 1rem;
+                gap: 1rem;
+            }
+
+            .nav-links {
+                gap: 1rem;
+            }
+
+            .card {
+                padding: 1.5rem;
+            }
+
+            .logo-section h2 {
+                font-size: 1.4rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .navbar-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .nav-links {
+                width: 100%;
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .nav-link,
+            .logout-btn {
+                width: 100%;
+                text-align: center;
+            }
+
+            .content-wrapper {
+                padding: 1rem;
+                gap: 1rem;
+            }
+
+            .card {
+                padding: 1rem;
+            }
+
+            .card h3 {
+                font-size: 1.2rem;
+                margin-bottom: 1rem;
+            }
+        }
+
+        /* Loading animation */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(102, 126, 234, 0.2);
+            border-radius: 50%;
+            border-top-color: #667eea;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Success animation */
+        .success-animation {
+            animation: pulse 1s ease-out 3;
+        }
+
+        /* Focus visible for accessibility */
+        *:focus-visible {
+            outline: 2px solid #667eea;
+            outline-offset: 2px;
+        }
+    </style>
+</head>
+<body>
+    <!-- ============================================================ -->
+    <!-- MAIN DASHBOARD -->
+    <!-- ============================================================ -->
+    <div class="dashboard-wrapper">
+        <!-- Navbar -->
+        <nav class="navbar">
+            <div class="navbar-container">
+                <div class="logo-section">
+                    <i class="fas fa-megaphone"></i>
+                    <h2>CampusVoice</h2>
+                </div>
+                <div class="nav-links">
+                    <a href="index.html" class="nav-link">Home</a>
+                    <a href="dashboard.html" class="nav-link active">Dashboard</a>
+                    <button class="logout-btn" onclick="handleLogout()">Logout</button>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <div class="content-wrapper">
+            <!-- Form Section -->
+            <div class="form-section">
+                <div class="card">
+                    <h3>Report a Complaint</h3>
+                    <form id="complaintForm">
+                        <div class="form-group">
+                            <label for="title">Title *</label>
+                            <input type="text" id="title" placeholder="Brief description of issue" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="category">Category *</label>
+                            <select id="category" required>
+                                <option value="">Select category</option>
+                                <option value="bullying">Bullying</option>
+                                <option value="water">Water Issues</option>
+                                <option value="hostel">Hostel Facilities</option>
+                                <option value="personal">Personal</option>
+                                <option value="academic">Academic</option>
+                                <option value="infrastructure">Infrastructure</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="severity">Severity *</label>
+                            <select id="severity" required>
+                                <option value="low">Low</option>
+                                <option value="medium">Medium</option>
+                                <option value="high">High</option>
+                                <option value="critical">Critical</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="description">Description *</label>
+                            <textarea id="description" placeholder="Describe the issue in detail" rows="5" required></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="location">Location</label>
+                            <input type="text" id="location" placeholder="Where did this happen?">
+                        </div>
+
+                        <div class="form-group checkbox">
+                            <input type="checkbox" id="anonymous">
+                            <label for="anonymous">Post as Anonymous</label>
+                        </div>
+
+                        <button type="submit" class="btn-primary">Submit Complaint</button>
+                        <div id="formMessage" class="message"></div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Complaints List Section -->
+            <div class="complaints-section">
+                <div class="card">
+                    <h3>My Complaints</h3>
+                    <div id="complaintsList" class="complaints-list"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Complaint Modal -->
+    <div id="complaintModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <div id="modalBody"></div>
+        </div>
+    </div>
+
+    <!-- Supabase Library - MUST LOAD FIRST BEFORE EVERYTHING -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        // Verify Supabase CDN loaded
+        setTimeout(() => {
+            if (typeof window.supabase === 'undefined') {
+                console.error('❌ CRITICAL: Supabase CDN failed to load!');
+                console.error('URL: https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2');
+                console.error('Check Network tab in browser DevTools for details');
+                // Try alternative CDN
+                console.log('⏳ Trying alternative CDN...');
+                const script = document.createElement('script');
+                script.src = 'https://unpkg.com/@supabase/supabase-js@2';
+                script.onerror = () => console.error('❌ Alternative CDN also failed');
+                document.head.appendChild(script);
+            } else {
+                console.log('✅ Supabase CDN loaded successfully');
+            }
+        }, 1000);
+    </script>
+
+    <!-- Supabase Configuration & Client - MUST LOAD AFTER SUPABASE CDN -->
+    <script src="config.js"></script>
+
+    <!-- App Setup -->
+    <script src="main.js"></script>
+    <script src="app.js"></script>
+    
+    <!-- Form Submission Handlers - MUST LOAD AFTER CONFIG.JS -->
+    <script>
+        // Wait for config.js to be ready before using submitComplaintToSupabase
+        let maxRetries = 50;
+        let retryCount = 0;
+
+        function waitForSupabaseAndSubmit(complaintData) {
+            // Check if function and supabase CDN are available
+            if (typeof submitComplaintToSupabase !== 'undefined' && typeof window.supabase !== 'undefined') {
+                console.log('✅ Supabase is ready, submitting...');
+                return submitComplaintToSupabase(complaintData);
+            }
+
+            // Log what's available for debugging
+            if (retryCount === 0) {
+                console.log('🔍 Debug Info:');
+                console.log('   - window.supabase:', typeof window.supabase);
+                console.log('   - submitComplaintToSupabase:', typeof submitComplaintToSupabase);
+                console.log('   - window.submitComplaintToSupabase:', typeof window.submitComplaintToSupabase);
+            }
+
+            // Retry after a short delay
+            if (retryCount < maxRetries) {
+                retryCount++;
+                if (retryCount % 10 === 0 || retryCount === 1) {
+                    console.log('⏳ Waiting for Supabase... (attempt ' + retryCount + '/' + maxRetries + ')');
+                }
+                return new Promise(resolve => {
+                    setTimeout(() => {
+                        resolve(waitForSupabaseAndSubmit(complaintData));
+                    }, 100);
+                });
+            }
+
+            // Failed to load - provide detailed error info
+            console.error('❌ Supabase did not load after ' + maxRetries + ' attempts');
+            console.error('   Final Debug Info:');
+            console.error('   - window.supabase:', typeof window.supabase);
+            console.error('   - submitComplaintToSupabase:', typeof submitComplaintToSupabase);
+            console.error('   Check browser Network tab to see if CDN script loaded');
+            return {
+                success: false,
+                error: 'Supabase library failed to load. Please refresh the page and check your internet connection.'
+            };
+        }
+    </script>
+    
+    <script>
+        // ============================================================
+        // ENHANCED INTERACTIONS & ANIMATIONS
+        // ============================================================
+
+        // Form submission animation
+        const complaintForm = document.getElementById('complaintForm');
+        if (complaintForm) {
+            complaintForm.addEventListener('submit', function(e) {
+                const btn = this.querySelector('.btn-primary');
+                btn.innerHTML = '<span class="loading"></span> Submitting...';
+                btn.disabled = true;
+            });
+        }
+
+        // Complaint card click animation
+        document.addEventListener('click', function(e) {
+            if (e.target.closest('.complaint-card')) {
+                const card = e.target.closest('.complaint-card');
+                card.style.animation = 'none';
+                setTimeout(() => {
+                    card.style.animation = 'slideInLeft 0.3s ease-out';
+                }, 10);
+            }
+        });
+
+        // Modal open/close animations
+        function openModal() {
+            const modal = document.getElementById('complaintModal');
+            if (modal) {
+                modal.classList.add('show');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('complaintModal');
+            if (modal) {
+                modal.classList.remove('show');
+                document.body.style.overflow = 'auto';
+            }
+        }
+
+        // Window click to close modal
+        window.addEventListener('click', function(e) {
+            const modal = document.getElementById('complaintModal');
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+
+        // Input field focus animations
+        document.querySelectorAll('input, select, textarea').forEach(field => {
+            field.addEventListener('focus', function() {
+                this.style.transition = 'all 0.3s ease';
+            });
+
+            field.addEventListener('blur', function() {
+                if (!this.value) {
+                    this.style.backgroundColor = '';
+                }
+            });
+        });
+
+        // Success message animation
+        function showSuccessMessage(message) {
+            const formMessage = document.getElementById('formMessage');
+            if (formMessage) {
+                formMessage.textContent = message;
+                formMessage.className = 'message success';
+                formMessage.style.animation = 'slideDown 0.3s ease-out';
+                
+                setTimeout(() => {
+                    formMessage.style.animation = 'fadeOut 0.3s ease-out forwards';
+                }, 4000);
+            }
+        }
+
+        // Button hover ripple effect
+        document.querySelectorAll('.btn-primary').forEach(btn => {
+            btn.addEventListener('mousemove', function(e) {
+                const rect = this.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                const ripple = document.createElement('span');
+                ripple.style.position = 'absolute';
+                ripple.style.left = x + 'px';
+                ripple.style.top = y + 'px';
+                ripple.style.width = '20px';
+                ripple.style.height = '20px';
+                ripple.style.background = 'rgba(255, 255, 255, 0.5)';
+                ripple.style.borderRadius = '50%';
+                ripple.style.pointerEvents = 'none';
+                ripple.style.animation = 'ripple 0.6s ease-out forwards';
+                
+                this.appendChild(ripple);
+                setTimeout(() => ripple.remove(), 600);
+            });
+        });
+
+        // Add ripple keyframe animation
+        if (!document.getElementById('rippleStyle')) {
+            const style = document.createElement('style');
+            style.id = 'rippleStyle';
+            style.textContent = `
+                @keyframes ripple {
+                    from {
+                        transform: scale(0);
+                        opacity: 1;
+                    }
+                    to {
+                        transform: scale(4);
+                        opacity: 0;
+                    }
+                }
+                @keyframes fadeOut {
+                    to {
+                        opacity: 0;
+                        transform: translateY(10px);
+                    }
+                }
+            `;
+            document.head.appendChild(style);
+        }
+
+        // Scroll animation for complaint cards
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'slideInLeft 0.6s ease-out';
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.complaint-card').forEach(card => {
+                observer.observe(card);
+            });
+        });
+
+        // Logout confirmation with animation
+        function handleLogout() {
+            if (confirm('Are you sure you want to logout?')) {
+                const wrapper = document.querySelector('.dashboard-wrapper');
+                if (wrapper) {
+                    wrapper.style.animation = 'fadeOut 0.3s ease-out forwards';
+                    setTimeout(() => {
+                        window.location.href = 'index.html';
+                    }, 300);
+                } else {
+                    window.location.href = 'index.html';
+                }
+            }
+        }
+
+        // Icon animation on hover
+        document.querySelectorAll('.logo-section i').forEach(icon => {
+            icon.addEventListener('mouseenter', function() {
+                this.style.animation = 'spin 0.6s ease-in-out';
+            });
+        });
+
+        // Form validation with animation
+        const form = document.getElementById('complaintForm');
+        if (form) {
+            form.addEventListener('submit', async function(e) {
+                e.preventDefault();
+
+                const inputs = this.querySelectorAll('[required]');
+                let isValid = true;
+
+                inputs.forEach(input => {
+                    if (!input.value.trim()) {
+                        input.style.animation = 'shake 0.4s ease-in-out';
+                        isValid = false;
+                    }
+                });
+
+                if (!isValid) {
+                    return;
+                }
+
+                // ============================================================
+                // SUPABASE INTEGRATION - COMPLAINT SUBMISSION
+                // ============================================================
+
+                // Get form data
+                const title = document.getElementById('title').value.trim();
+                const category = document.getElementById('category').value;
+                const severity = document.getElementById('severity').value;
+                const description = document.getElementById('description').value.trim();
+                const location = document.getElementById('location').value.trim();
+                const isAnonymous = document.getElementById('anonymous').checked;
+
+                // Get logged-in user
+                const userStr = localStorage.getItem('campusvoice_current_user');
+                const user = userStr ? JSON.parse(userStr) : {};
+
+                // Create complaint object for Supabase
+                // Note: id, user_id, created_at, updated_at are auto-generated by Supabase
+                const complaintData = {
+                    name: isAnonymous ? 'Anonymous' : user.name || 'Student',
+                    email: user.email || 'student@college.edu',
+                    message: description,
+                    title: title,
+                    category: category,
+                    severity: severity,
+                    location: location || 'Not specified',
+                    is_anonymous: isAnonymous,
+                    status: 'reported'
+                };
+
+                // Validate required fields
+                if (!complaintData.name || !complaintData.email || !complaintData.title || !complaintData.message || !complaintData.category) {
+                    formMsg.className = 'message error';
+                    formMsg.textContent = '❌ Missing required fields';
+                    submitBtn.innerHTML = originalText;
+                    submitBtn.disabled = false;
+                    return;
+                }
+
+                // Get submit button and show loading state
+                const submitBtn = this.querySelector('button[type="submit"]');
+                const originalText = submitBtn.innerHTML;
+                submitBtn.innerHTML = '<span class="loading"></span> Submitting...';
+                submitBtn.disabled = true;
+                const formMsg = document.getElementById('formMessage');
+
+                // Submit to Supabase
+                try {
+                    const result = await waitForSupabaseAndSubmit(complaintData);
+
+                    if (result.success) {
+                        // Show success message
+                        formMsg.className = 'message success';
+                        formMsg.textContent = '✅ Complaint submitted successfully! Reference ID: ' + (result.data[0]?.id || 'CV-' + Date.now());
+                        
+                        // Alert user
+                        alert('✅ Complaint submitted successfully!\\n\\nReference ID: ' + (result.data[0]?.id || 'CV-' + Date.now()));
+                        console.log('✅ Complaint saved:', result.data);
+
+                        // Clear form
+                        form.reset();
+
+                        // Clear message after 5 seconds
+                        setTimeout(() => {
+                            formMsg.className = 'message';
+                        }, 5000);
+
+                        // Refresh complaints list
+                        displayUserComplaints();
+
+                    } else {
+                        // Show error message
+                        formMsg.className = 'message error';
+                        formMsg.textContent = '❌ Error: ' + result.error;
+                        
+                        // Alert user
+                        alert('❌ Error submitting complaint:\\n' + result.error);
+                        console.error('❌ Supabase Error:', result.error, result.details);
+                    }
+
+                } catch (error) {
+                    console.error('❌ Unexpected error:', error);
+                    formMsg.className = 'message error';
+                    formMsg.textContent = '❌ Error: ' + error.message;
+                    alert('❌ Unexpected error:\\n' + error.message);
+                } finally {
+                    // Reset button state
+                    submitBtn.innerHTML = originalText;
+                    submitBtn.disabled = false;
+                }
+            });
+        }
+
+        // Add shake animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes shake {
+                0%, 100% { transform: translateX(0); }
+                10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+                20%, 40%, 60%, 80% { transform: translateX(5px); }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>

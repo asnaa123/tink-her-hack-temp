@@ -1,0 +1,1109 @@
+/**
+ * ============================================================
+ * CampusVoice - Single Page App Styles
+ * ============================================================
+ * 
+ * Design System:
+ * - Deep Mesh Gradient Background (Midnight Blue + Purple/Cyan)
+ * - Glassmorphism: backdrop-filter blur, semi-transparent backgrounds
+ * - 24px rounded corners on cards
+ * - Smooth transitions between pages
+ * - Mobile-first responsive design
+ * 
+ * How it works:
+ * - Pages are hidden/shown using .page.active class
+ * - backdrop-filter creates glass effect over gradient
+ * - CSS variables for easy theming
+ */
+
+/* ============================================================ */
+/* CSS VARIABLES & THEMING */
+/* ============================================================ */
+/* Top of styles-spa.css */
+body {
+    zoom: 0.85;
+    -moz-transform: scale(0.85);
+    transform: scale(0.85);
+    -moz-transform-origin: center top;
+    transform-origin: center top;
+}
+
+/* ... your existing CSS follows below ... */
+:root {
+    /* Colors */
+    --primary-color: #6366f1;
+    --secondary-color: #ec4899;
+    --success-color: #10b981;
+    --warning-color: #f59e0b;
+    --danger-color: #ef4444;
+    --dark-bg: #0a0b1e;
+    --light-text: #ffffff;
+    --text-dark: #1a1a1a;
+    --text-muted: #666666;
+
+    /* Spacing */
+    --spacing-xs: 8px;
+    --spacing-sm: 16px;
+    --spacing-md: 24px;
+    --spacing-lg: 32px;
+    --spacing-xl: 48px;
+
+    /* Border Radius */
+    --radius-sm: 8px;
+    --radius-md: 16px;
+    --radius-lg: 24px;
+
+    /* Transitions */
+    --transition-fast: 0.2s ease;
+    --transition-normal: 0.3s ease;
+    --transition-slow: 0.5s ease;
+
+    /* Shadows */
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.15);
+    --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.2);
+}
+
+/* ============================================================ */
+/* GLOBAL STYLES */
+/* ============================================================ */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    /* Deep Mesh Gradient Background */
+    /* Midnight Blue #0a0b1e with blurred Purple/Cyan glows */
+    background: linear-gradient(135deg, #0a0b1e 0%, #1a0033 25%, #0d4466 50%, #1a0033 75%, #0a0b1e 100%);
+    background-attachment: fixed;
+    background-size: 400% 400%;
+    min-height: 100vh;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    color: var(--text-dark);
+    overflow-x: hidden;
+
+    /* Add subtle animation to background */
+    animation: gradientShift 15s ease infinite;
+}
+
+@keyframes gradientShift {
+    0%, 100% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+}
+
+/* ============================================================ */
+/* PAGE SYSTEM (SPA Page Management) */
+/* ============================================================ */
+
+/**
+ * How pages work:
+ * - All pages are in the DOM but hidden
+ * - Only .page.active is visible
+ * - Transitions are handled with CSS opacity
+ */
+
+.page {
+    /* Hidden by default */
+    display: none;
+    opacity: 0;
+
+    /* Smooth transition when showing/hiding */
+    transition: opacity var(--transition-normal);
+}
+
+.page.active {
+    /* Displayed and fully opaque */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 1;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 10;
+    padding: var(--spacing-md);
+}
+
+.page-container {
+    width: 100%;
+    max-width: 500px;
+    animation: slideUp 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes slideUp {
+    0% {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ============================================================ */
+/* CARD STYLING (Glassmorphism) */
+/* ============================================================ */
+
+/**
+ * Glassmorphism Effect:
+ * - backdrop-filter: blur(15px) creates glass effect
+ * - rgba background with transparency
+ * - 1px semi-transparent border
+ * - Created depth with shadows
+ */
+
+.login-card,
+.info-card,
+.selector-card,
+.success-card {
+    /* Glassmorphism base */
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+    box-shadow: var(--shadow-lg),
+                inset 0 0 20px rgba(255, 255, 255, 0.1);
+
+    /* Animation on load */
+    animation: cardPopIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes cardPopIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* ============================================================ */
+/* PAGE 1: LOGIN GATEWAY STYLES */
+/* ============================================================ */
+
+.login-header {
+    text-align: center;
+    margin-bottom: var(--spacing-lg);
+}
+
+.logo {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto var(--spacing-md);
+    font-size: 40px;
+    color: white;
+    box-shadow: 0 8px 24px rgba(99, 102, 241, 0.3);
+}
+
+.login-header h1 {
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin-bottom: var(--spacing-xs);
+}
+
+.login-header p {
+    font-size: 16px;
+    color: var(--text-muted);
+}
+
+.login-footer {
+    text-align: center;
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-top: var(--spacing-md);
+}
+
+/* ============================================================ */
+/* PAGE HEADERS */
+/* ============================================================ */
+
+.page-header {
+    margin-bottom: var(--spacing-lg);
+}
+
+.page-header h2 {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin-bottom: var(--spacing-xs);
+}
+
+.page-header p {
+    font-size: 15px;
+    color: var(--text-muted);
+}
+
+/* ============================================================ */
+/* FORM STYLES */
+/* ============================================================ */
+
+form {
+    width: 100%;
+}
+
+.form-group {
+    margin-bottom: var(--spacing-md);
+}
+
+label {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-dark);
+    margin-bottom: var(--spacing-xs);
+}
+
+.required {
+    color: var(--danger-color);
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+textarea {
+    width: 100%;
+    padding: var(--spacing-sm);
+    border: 1px solid #e5e5e5;
+    border-radius: var(--radius-md);
+    font-size: 15px;
+    font-family: inherit;
+    transition: all var(--transition-fast);
+    background: rgba(255, 255, 255, 0.8);
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+    background: white;
+}
+
+input[type="text"]:disabled,
+input[type="email"]:disabled,
+input[type="password"]:disabled {
+    background: #f5f5f5;
+    color: #999;
+    cursor: not-allowed;
+}
+
+textarea {
+    resize: vertical;
+    min-height: 120px;
+    font-family: inherit;
+}
+
+/* ============================================================ */
+/* FORM HELPERS */
+/* ============================================================ */
+
+.hint {
+    display: block;
+    font-size: 12px;
+    color: var(--primary-color);
+    margin-top: var(--spacing-xs);
+}
+
+.char-count {
+    display: block;
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: var(--spacing-xs);
+    text-align: right;
+}
+
+.form-section {
+    margin-bottom: var(--spacing-lg);
+    padding-bottom: var(--spacing-lg);
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.form-section:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+}
+
+.section-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-dark);
+    margin-bottom: var(--spacing-md);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+}
+
+.section-title i {
+    color: var(--primary-color);
+}
+
+/* ============================================================ */
+/* CATEGORY GRID (Section A: Categories) */
+/* ============================================================ */
+
+.category-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-sm);
+}
+
+.category-btn {
+    /* Base styles */
+    padding: var(--spacing-md);
+    background: white;
+    border: 2px solid #e5e5e5;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-dark);
+    transition: all var(--transition-normal);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-xs);
+    min-height: 120px;
+
+    /* Icon styling */
+    font-size: 32px;
+}
+
+.category-btn i {
+    font-size: 32px;
+    color: var(--primary-color);
+}
+
+.category-btn span {
+    font-size: 14px;
+}
+
+/* Hover effect */
+.category-btn:hover {
+    border-color: var(--primary-color);
+    background: rgba(99, 102, 241, 0.05);
+    transform: translateY(-2px);
+}
+
+/* SELECTED STATE - Glowing border + highlight */
+.category-btn.selected {
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(236, 72, 153, 0.1));
+    border: 2px solid var(--primary-color);
+    box-shadow: 0 0 20px rgba(99, 102, 241, 0.3),
+                inset 0 0 20px rgba(99, 102, 241, 0.1);
+    transform: scale(1.05);
+}
+
+/* Responsive: Stack on smaller screens */
+@media (max-width: 480px) {
+    .category-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .category-btn {
+        min-height: 100px;
+        padding: var(--spacing-sm);
+    }
+
+    .category-btn i {
+        font-size: 28px;
+    }
+}
+
+/* ============================================================ */
+/* PRIORITY GRID (Section B: Priorities) */
+/* ============================================================ */
+
+.priority-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-sm);
+}
+
+.priority-btn {
+    /* Base styles */
+    padding: var(--spacing-md);
+    background: white;
+    border: 2px solid #e5e5e5;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-dark);
+    transition: all var(--transition-normal);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-xs);
+    min-height: 100px;
+}
+
+.priority-btn i {
+    font-size: 24px;
+}
+
+/* Hover effect */
+.priority-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+/* SELECTED STATE for each priority level */
+.priority-btn.priority-low.selected {
+    background: #dcfce7;
+    border-color: var(--success-color);
+    color: var(--success-color);
+    box-shadow: 0 0 15px rgba(16, 185, 129, 0.3);
+}
+
+.priority-btn.priority-low.selected i {
+    color: var(--success-color);
+}
+
+.priority-btn.priority-medium.selected {
+    background: #fef3c7;
+    border-color: var(--warning-color);
+    color: var(--warning-color);
+    box-shadow: 0 0 15px rgba(245, 158, 11, 0.3);
+}
+
+.priority-btn.priority-medium.selected i {
+    color: var(--warning-color);
+}
+
+.priority-btn.priority-high.selected {
+    background: #fee2e2;
+    border-color: var(--danger-color);
+    color: var(--danger-color);
+    box-shadow: 0 0 15px rgba(239, 68, 68, 0.3);
+}
+
+.priority-btn.priority-high.selected i {
+    color: var(--danger-color);
+}
+
+/* ============================================================ */
+/* VALIDATION ERROR */
+/* ============================================================ */
+
+.validation-error {
+    background: #fee2e2;
+    border: 1px solid #fecaca;
+    border-left: 4px solid var(--danger-color);
+    color: var(--danger-color);
+    padding: var(--spacing-md);
+    border-radius: var(--radius-md);
+    margin-bottom: var(--spacing-md);
+    display: none;
+    animation: slideDown 0.3s ease;
+}
+
+.validation-error i {
+    margin-right: var(--spacing-xs);
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ============================================================ */
+/* BUTTONS */
+/* ============================================================ */
+
+.btn {
+    /* Base styles */
+    padding: var(--spacing-sm) var(--spacing-md);
+    border: none;
+    border-radius: var(--radius-md);
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition-normal);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-xs);
+    font-family: inherit;
+
+    /* Prevent text selection on double click */
+    user-select: none;
+}
+
+/* Primary Button */
+.btn-primary {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(99, 102, 241, 0.4);
+}
+
+.btn-primary:active {
+    transform: translateY(0);
+}
+
+/* Secondary Button */
+.btn-secondary {
+    background: rgba(99, 102, 241, 0.1);
+    color: var(--primary-color);
+    border: 2px solid var(--primary-color);
+}
+
+.btn-secondary:hover {
+    background: rgba(99, 102, 241, 0.2);
+    transform: translateY(-2px);
+}
+
+/* Ghost Button */
+.btn-ghost {
+    background: transparent;
+    color: var(--text-muted);
+    border: 2px solid #e5e5e5;
+}
+
+.btn-ghost:hover {
+    background: #f5f5f5;
+    border-color: var(--text-muted);
+}
+
+/* Full Width Button */
+.btn-full {
+    width: 100%;
+}
+
+/* Button Group */
+.button-group {
+    display: flex;
+    gap: var(--spacing-sm);
+    margin-top: var(--spacing-lg);
+}
+
+.button-group .btn {
+    flex: 1;
+}
+
+/* Submit Button with special styling */
+.btn-submit {
+    font-size: 16px;
+    min-height: 50px;
+}
+
+/* ============================================================ */
+/* DIVIDER */
+/* ============================================================ */
+
+.divider {
+    position: relative;
+    margin: var(--spacing-lg) 0;
+    text-align: center;
+    font-size: 13px;
+    color: var(--text-muted);
+}
+
+.divider::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: #e5e5e5;
+}
+
+.divider span {
+    position: relative;
+    background: white;
+    padding: 0 var(--spacing-sm);
+}
+
+/* ============================================================ */
+/* PAGE 4: SUCCESS PAGE STYLES */
+/* ============================================================ */
+
+.success-card {
+    text-align: center;
+    padding: var(--spacing-xl);
+}
+
+.success-icon {
+    width: 100px;
+    height: 100px;
+    background: linear-gradient(135deg, var(--success-color), #34d399);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto var(--spacing-lg);
+    font-size: 50px;
+    color: white;
+    box-shadow: 0 12px 32px rgba(16, 185, 129, 0.3);
+    animation: scaleIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes scaleIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.3);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.success-title {
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin-bottom: var(--spacing-sm);
+    animation: slideUp 0.6s ease-out 0.2s both;
+}
+
+.success-subtitle {
+    font-size: 15px;
+    color: var(--text-muted);
+    margin-bottom: var(--spacing-lg);
+    line-height: 1.6;
+    animation: slideUp 0.6s ease-out 0.3s both;
+}
+
+/* ============================================================ */
+/* REFERENCE ID BOX */
+/* ============================================================ */
+
+.reference-box {
+    background: rgba(99, 102, 241, 0.08);
+    border: 1px solid rgba(99, 102, 241, 0.2);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    margin: var(--spacing-lg) 0;
+    animation: slideUp 0.6s ease-out 0.4s both;
+}
+
+.reference-box small {
+    display: block;
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-bottom: var(--spacing-xs);
+}
+
+.reference-box code {
+    display: block;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--primary-color);
+    font-family: 'Courier New', monospace;
+    letter-spacing: 2px;
+}
+
+/* ============================================================ */
+/* PROGRESS TRACKER */
+/* ============================================================ */
+
+.progress-tracker {
+    background: rgba(99, 102, 241, 0.05);
+    border: 1px solid rgba(99, 102, 241, 0.1);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-lg);
+    margin: var(--spacing-lg) 0;
+    text-align: left;
+    animation: slideUp 0.6s ease-out 0.5s both;
+}
+
+.progress-tracker h3 {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-dark);
+    margin-bottom: var(--spacing-md);
+}
+
+.progress-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-sm);
+}
+
+.progress-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-xs);
+    flex: 1;
+    font-size: 12px;
+    color: var(--text-muted);
+}
+
+.progress-step.completed {
+    color: var(--success-color);
+}
+
+.step-circle {
+    width: 40px;
+    height: 40px;
+    background: #e5e7eb;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 16px;
+    color: var(--text-muted);
+    transition: all var(--transition-normal);
+}
+
+.progress-step.completed .step-circle {
+    background: var(--success-color);
+    color: white;
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}
+
+.progress-line {
+    flex: 1;
+    height: 4px;
+    background: #e5e7eb;
+    border-radius: 2px;
+    position: relative;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--success-color), var(--success-color));
+    border-radius: 2px;
+    transition: width var(--transition-slow);
+}
+
+/* ============================================================ */
+/* INFO BOX */
+/* ============================================================ */
+
+.info-box {
+    background: #f0fdf4;
+    border: 1px solid #dcfce7;
+    border-left: 4px solid var(--success-color);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    margin: var(--spacing-lg) 0;
+    font-size: 14px;
+    color: #166534;
+    animation: slideUp 0.6s ease-out 0.6s both;
+}
+
+.info-box p {
+    margin: 0;
+    line-height: 1.6;
+}
+
+/* ============================================================ */
+/* RESPONSIVE DESIGN */
+/* ============================================================ */
+
+/* Tablet screens (max 768px) */
+@media (max-width: 768px) {
+    :root {
+        --spacing-lg: 24px;
+        --spacing-xl: 32px;
+    }
+
+    .page.active {
+        padding: var(--spacing-md);
+    }
+
+    .login-card,
+    .info-card,
+    .selector-card,
+    .success-card {
+        padding: var(--spacing-md);
+    }
+
+    .login-header h1 {
+        font-size: 28px;
+    }
+
+    .page-header h2 {
+        font-size: 24px;
+    }
+
+    .success-title {
+        font-size: 28px;
+    }
+
+    .category-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .priority-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .button-group {
+        flex-direction: row;
+    }
+}
+
+/* Mobile screens (max 480px) */
+@media (max-width: 480px) {
+    :root {
+        --spacing-md: 16px;
+        --spacing-lg: 20px;
+        --spacing-xl: 24px;
+    }
+
+    .page.active {
+        padding: var(--spacing-sm);
+    }
+
+    .page-container {
+        max-width: 100%;
+    }
+
+    .login-card,
+    .info-card,
+    .selector-card,
+    .success-card {
+        padding: var(--spacing-md);
+        border-radius: 16px;
+    }
+
+    .logo {
+        width: 70px;
+        height: 70px;
+        font-size: 35px;
+    }
+
+    .login-header h1 {
+        font-size: 24px;
+    }
+
+    .login-header p {
+        font-size: 14px;
+    }
+
+    .page-header h2 {
+        font-size: 20px;
+    }
+
+    .page-header p {
+        font-size: 13px;
+    }
+
+    .success-title {
+        font-size: 24px;
+    }
+
+    .success-icon {
+        width: 80px;
+        height: 80px;
+        font-size: 40px;
+        margin-bottom: var(--spacing-md);
+    }
+
+    .section-title {
+        font-size: 14px;
+    }
+
+    .category-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: var(--spacing-xs);
+    }
+
+    .category-btn {
+        min-height: 100px;
+        padding: var(--spacing-sm);
+        border-radius: 12px;
+    }
+
+    .category-btn i {
+        font-size: 28px;
+    }
+
+    .category-btn span {
+        font-size: 12px;
+    }
+
+    .priority-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: var(--spacing-xs);
+    }
+
+    .priority-btn {
+        min-height: 80px;
+        padding: var(--spacing-sm);
+        font-size: 12px;
+        border-radius: 12px;
+    }
+
+    .priority-btn i {
+        font-size: 20px;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    textarea {
+        padding: 12px;
+        font-size: 16px; /* Prevent zoom on iOS */
+    }
+
+    label {
+        font-size: 13px;
+    }
+
+    .btn {
+        padding: 12px 16px;
+        font-size: 14px;
+        border-radius: 10px;
+    }
+
+    .btn-full {
+        width: 100%;
+    }
+
+    .button-group {
+        flex-direction: column-reverse;
+        gap: var(--spacing-sm);
+    }
+
+    .button-group .btn {
+        width: 100%;
+    }
+
+    .reference-box {
+        padding: var(--spacing-md);
+    }
+
+    .reference-box code {
+        font-size: 15px;
+    }
+
+    .progress-tracker {
+        padding: var(--spacing-md);
+    }
+
+    .progress-step span {
+        font-size: 11px;
+    }
+
+    .progress-bar {
+        gap: 8px;
+    }
+
+    .step-circle {
+        width: 36px;
+        height: 36px;
+        font-size: 14px;
+    }
+}
+
+/* ============================================================ */
+/* ACCESSIBILITY & UX IMPROVEMENTS */
+/* ============================================================ */
+
+/* Focus visible for keyboard navigation */
+.btn:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+button:focus-visible {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+}
+
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --text-dark: #f0f0f0;
+        --text-muted: #999;
+    }
+
+    .login-card,
+    .info-card,
+    .selector-card,
+    .success-card {
+        background: rgba(20, 20, 40, 0.9);
+        border-color: rgba(255, 255, 255, 0.1);
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    textarea {
+        background: rgba(255, 255, 255, 0.05);
+        color: #f0f0f0;
+        border-color: rgba(255, 255, 255, 0.1);
+    }
+
+    input[type="text"]:focus,
+    input[type="email"]:focus,
+    input[type="password"]:focus,
+    textarea:focus {
+        background: rgba(255, 255, 255, 0.1);
+    }
+
+    .divider span {
+        background: rgba(20, 20, 40, 0.9);
+    }
+
+    .category-btn {
+        background: rgba(255, 255, 255, 0.08);
+        border-color: rgba(255, 255, 255, 0.1);
+        color: #f0f0f0;
+    }
+
+    .priority-btn {
+        background: rgba(255, 255, 255, 0.08);
+        border-color: rgba(255, 255, 255, 0.1);
+        color: #f0f0f0;
+    }
+
+    .btn-ghost {
+        border-color: rgba(255, 255, 255, 0.2);
+    }
+}
