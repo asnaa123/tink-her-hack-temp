@@ -13,7 +13,7 @@
 - Member 2: Hannah Margret M S  - jyothi engineering college
 
 ### Hosted Project Link
-[mention your project hosted link here]
+https://classy-kangaroo-ef1214.netlify.app/
 
 ### Project Description
 CampusVoice is a centralized web platform designed for students to report and track campus-related issues (maintenance, safety, or academic) in real-time. It bridges the communication gap between the student body and campus administration.
@@ -195,37 +195,41 @@ JSON
 **Example 1: Basic Processing**
 
 **Input:**
-```
-This is a sample input file
-with multiple lines of text
-for demonstration purposes
+Auth: Selects "Report Anonymously".
+
+Details: Enters "Broken pipe in Block B" as the description.
+
+Category: Selects Water (Category ID: 02).
+
+Priority: Selects High.
 ```
 
 **Command:**
-```bash
-python script.py sample.txt
-```
+// Internal state processing
+{
+  "user": "Anonymous",
+  "issue": "Broken pipe in Block B",
+  "category": "Water",
+  "urgency": "High",
+  "timestamp": "2026-02-14 09:45:00"
+}
 
 **Output:**
 ```
-Processing: sample.txt
-Lines processed: 3
-Characters counted: 86
-Status: Success
-Output saved to: output.txt
-```
+Success! Your voice has been heard.
+Reference ID: CV-2026-8842
+Status: Forwarded to Maintenance Department
+Priority Level: High (Expected response within 24 hours)
 
 
 
 ## Project Demo
 
 ### Video
-[Add your demo video link here - YouTube, Google Drive, etc.]
+https://youtu.be/t9XEUYmgEvg
 
-*Explain what the video demonstrates - key features, user flow, technical highlights*
+*this is how our website work.
 
-### Additional Demos
-[Add any extra demo materials/links - Live site, APK download, online demo, etc.]
 
 ---
 
